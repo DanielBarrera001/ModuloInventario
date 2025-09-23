@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|c:\\users\\daniel\\source\\repos\\sistemainventarioapp\\sistemainventarioapp\\views\\movimientos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|solutionrelative:sistemainventarioapp\\views\\movimientos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|c:\\users\\daniel\\source\\repos\\sistemainventarioapp\\sistemainventarioapp\\controllers\\movimientoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|solutionrelative:sistemainventarioapp\\controllers\\movimientoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\SistemaInventarioApp\\Views\\Movimientos\\Index.cshtml",
+              "RelativeDocumentMoniker": "SistemaInventarioApp\\Views\\Movimientos\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\SistemaInventarioApp\\Views\\Movimientos\\Index.cshtml",
+              "RelativeToolTip": "SistemaInventarioApp\\Views\\Movimientos\\Index.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAADwvyQAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-23T04:10:55.797Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MovimientosController.cs",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\SistemaInventarioApp\\Controllers\\MovimientosController.cs",
+              "RelativeDocumentMoniker": "SistemaInventarioApp\\Controllers\\MovimientosController.cs",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\SistemaInventarioApp\\Controllers\\MovimientosController.cs",
+              "RelativeToolTip": "SistemaInventarioApp\\Controllers\\MovimientosController.cs",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAywIkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-23T04:10:28.954Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

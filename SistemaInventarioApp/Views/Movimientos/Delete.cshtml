@@ -1,0 +1,27 @@
+﻿@model SistemaInventarioApp.Entidades.Movimiento
+
+@{
+    ViewData["Title"] = "Eliminar Movimiento";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4 text-danger">Eliminar Movimiento</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <p>¿Seguro que quieres eliminar el siguiente movimiento?</p>
+            <ul>
+                <li><strong>ID:</strong> @Model.Id</li>
+                <li><strong>Producto:</strong> @Model.Producto?.Nombre</li>
+                <li><strong>Código de Barras:</strong> @Model.Producto?.CodigoBarras</li>
+                <li><strong>Cantidad:</strong> @Model.Cantidad</li>
+                <li><strong>Tipo:</strong> @Model.Tipo</li>
+                <li><strong>Fecha y Hora:</strong> @Model.Fecha.ToString("dd/MM/yyyy HH:mm:ss")</li>
+            </ul>
+            <form method="post">
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+                <a class="btn btn-secondary" href="@Url.Action("Index")">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>

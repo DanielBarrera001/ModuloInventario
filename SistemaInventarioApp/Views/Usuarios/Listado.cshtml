@@ -1,0 +1,70 @@
+﻿@model UsuariosListadoViewModel
+
+@{
+    ViewData["Title"] = "Listado de usuarios";
+    Layout = "../shared/_layout";
+}
+
+<h1>Listado de usuarios</h1>
+
+<a class="btn btn-success mb-3" asp-action="Registro">Crear una nueva cuenta</a>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (Model.Mensaje != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @Model.Mensaje
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (Model.Usuarios != null)
+{
+    <form method="post">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td>Acción</td>
+                    <td>Email</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var usuario in Model.Usuarios)
+                {
+                    var esUsuarioActual = usuario.Email == User.Identity.Name;
+                    <tr>
+                        <td>
+                            <form method="post" asp-action="HacerAdmin" class="d-inline">
+                                <input type="hidden" name="email" value="@usuario.Email" />
+                                <button class="btn btn-primary me-2" type="submit" @(esUsuarioActual ? "disabled" : "")>
+                                    Hacer Admin
+                                </button>
+                            </form>
+
+                            <form method="post" asp-action="RemoverAdmin" class="d-inline">
+                                <input type="hidden" name="email" value="@usuario.Email" />
+                                <button class="btn btn-secondary me-2" type="submit" @(esUsuarioActual ? "disabled" : "")>
+                                    Remover Admin
+                                </button>
+                            </form>
+                        </td>
+                        <td>@usuario.Email</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </form>
+}
+else
+{
+    <p>No hay usuarios a mostrar</p>
+}

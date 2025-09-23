@@ -1,0 +1,22 @@
+﻿@model SistemaInventarioApp.Models.ErrorViewModel
+
+<div class="container py-5 text-center">
+    <img src="~/images/error.png" alt="Error" style="max-width:200px;" />
+    <h1 class="display-4 text-danger">¡Oops!</h1>
+
+    @if (!string.IsNullOrEmpty(Model.MensajePersonalizado))
+    {
+        <p class="lead">@Model.MensajePersonalizado</p>
+    }
+    else
+    {
+        <p class="lead">Ha ocurrido un error inesperado.</p>
+    }
+
+    @if (Model.ShowRequestId)
+    {
+        <p><strong>RequestId:</strong> @Model.RequestId</p>
+    }
+
+    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Volver al inicio</a>
+</div>

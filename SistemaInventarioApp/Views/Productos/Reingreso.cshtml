@@ -1,0 +1,38 @@
+﻿@model SistemaInventarioApp.Entidades.Producto
+
+<h2>Reingreso de Producto</h2>
+
+@if (ViewData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@ViewData["Mensaje"]</div>
+}
+
+<form asp-action="Reingreso" method="post" class="mb-4">
+    <div class="mb-3">
+        <label class="form-label">Código de Barras</label>
+        <input type="text" name="codigoBarras" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Cantidad a ingresar</label>
+        <input type="number" name="cantidad" class="form-control" min="1" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Reingresar</button>
+</form>
+
+@if (Model != null)
+{
+    <h4>Producto encontrado</h4>
+    <dl class="row">
+        <dt class="col-sm-2">Nombre</dt>
+        <dd class="col-sm-10">@Model.Nombre</dd>
+
+        <dt class="col-sm-2">Descripción</dt>
+        <dd class="col-sm-10">@Model.Descripcion</dd>
+
+        <dt class="col-sm-2">Precio</dt>
+        <dd class="col-sm-10">@string.Format("{0:C}", Model.Precio)</dd>
+
+        <dt class="col-sm-2">Stock actualizado</dt>
+        <dd class="col-sm-10">@Model.Stock</dd>
+    </dl>
+}

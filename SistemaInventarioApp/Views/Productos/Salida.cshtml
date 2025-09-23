@@ -1,0 +1,41 @@
+﻿@model SistemaInventarioApp.Entidades.Producto
+
+<h2>Salida de Producto</h2>
+
+@if (ViewData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@ViewData["Mensaje"]</div>
+}
+
+<!-- Aquí se muestran errores -->
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Salida" method="post" class="mb-4">
+    <div class="mb-3">
+        <label class="form-label">Código de Barras</label>
+        <input type="text" name="codigoBarras" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Cantidad a retirar</label>
+        <input type="number" name="cantidad" class="form-control" min="1" required />
+    </div>
+    <button type="submit" class="btn btn-danger">Retirar</button>
+</form>
+
+@if (Model != null && Model.Id > 0)
+{
+    <h4>Producto actualizado</h4>
+    <dl class="row">
+        <dt class="col-sm-2">Nombre</dt>
+        <dd class="col-sm-10">@Model.Nombre</dd>
+
+        <dt class="col-sm-2">Descripción</dt>
+        <dd class="col-sm-10">@Model.Descripcion</dd>
+
+        <dt class="col-sm-2">Precio</dt>
+        <dd class="col-sm-10">@string.Format("{0:C}", Model.Precio)</dd>
+
+        <dt class="col-sm-2">Stock actualizado</dt>
+        <dd class="col-sm-10">@Model.Stock</dd>
+    </dl>
+}

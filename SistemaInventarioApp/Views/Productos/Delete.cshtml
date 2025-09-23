@@ -1,0 +1,27 @@
+﻿@model SistemaInventarioApp.Entidades.Producto
+
+<h2>Eliminar Producto</h2>
+
+<div class="alert alert-danger">
+    ¿Estás seguro que deseas eliminar el producto <strong>@Model.Nombre</strong>?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-2">Código de Barras</dt>
+    <dd class="col-sm-10">@Model.CodigoBarras</dd>
+
+    <dt class="col-sm-2">Descripción</dt>
+    <dd class="col-sm-10">@Model.Descripcion</dd>
+
+    <dt class="col-sm-2">Precio</dt>
+    <dd class="col-sm-10">@string.Format("{0:C}", Model.Precio)</dd>
+
+    <dt class="col-sm-2">Stock</dt>
+    <dd class="col-sm-10">@Model.Stock</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

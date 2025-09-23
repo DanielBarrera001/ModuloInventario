@@ -1,0 +1,39 @@
+﻿@using SistemaInventarioApp.Entidades
+@inject ApplicationDbContext Context
+
+<h2>Reportes</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <h5>Reporte Diario</h5>
+        <form method="get" asp-action="Generar">
+            <input type="hidden" name="tipo" value="diario" />
+            <input type="date" name="fecha" class="form-control mb-2" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            <button type="submit" class="btn btn-primary">Generar PDF</button>
+        </form>
+    </div>
+
+    <div class="col-md-4">
+        <h5>Reporte Mensual</h5>
+        <form method="get" asp-action="Generar">
+            <input type="hidden" name="tipo" value="mensual" />
+            <input type="month" name="fecha" class="form-control mb-2" value="@DateTime.Today.ToString("yyyy-MM")" />
+            <button type="submit" class="btn btn-primary">Generar PDF</button>
+        </form>
+    </div>
+
+    <div class="col-md-4">
+        <h5>Reporte por Producto</h5>
+        <form method="get" asp-action="Generar">
+            <input type="hidden" name="tipo" value="producto" />
+            <select name="productoId" class="form-select mb-2">
+                <option value="">-- Seleccionar producto --</option>
+                @foreach (var p in Context.Productos)
+                {
+                    <option value="@p.Id">@p.Nombre (@p.CodigoBarras)</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-primary">Generar PDF</button>
+        </form>
+    </div>
+</div>
