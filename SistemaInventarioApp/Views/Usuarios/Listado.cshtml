@@ -5,66 +5,65 @@
     Layout = "../shared/_layout";
 }
 
-<h1>Listado de usuarios</h1>
-
-<a class="btn btn-success mb-3" asp-action="Registro">Crear una nueva cuenta</a>
-
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <i class="bi bi-exclamation-triangle-fill"></i>
-        @TempData["Error"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3"><i class="bi bi-people-fill"></i> Listado de Usuarios</h1>
+        <a class="btn btn-success" asp-action="Registro">
+            <i class="bi bi-person-plus-fill"></i> Crear nueva cuenta
+        </a>
     </div>
-}
 
-@if (Model.Mensaje != null)
-{
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        @Model.Mensaje
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
+    @if (Model.Mensaje != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill"></i> @Model.Mensaje
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
-@if (Model.Usuarios != null)
-{
-    <form method="post">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <td>Acción</td>
-                    <td>Email</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var usuario in Model.Usuarios)
-                {
-                    var esUsuarioActual = usuario.Email == User.Identity.Name;
+    @if (Model.Usuarios != null && Model.Usuarios.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
                     <tr>
-                        <td>
-                            <form method="post" asp-action="HacerAdmin" class="d-inline">
-                                <input type="hidden" name="email" value="@usuario.Email" />
-                                <button class="btn btn-primary me-2" type="submit" @(esUsuarioActual ? "disabled" : "")>
-                                    Hacer Admin
-                                </button>
-                            </form>
-
-                            <form method="post" asp-action="RemoverAdmin" class="d-inline">
-                                <input type="hidden" name="email" value="@usuario.Email" />
-                                <button class="btn btn-secondary me-2" type="submit" @(esUsuarioActual ? "disabled" : "")>
-                                    Remover Admin
-                                </button>
-                            </form>
-                        </td>
-                        <td>@usuario.Email</td>
+                        <th>Acción</th>
+                        <th>Email</th>
                     </tr>
-                }
+                </thead>
+                <tbody>
+                    @foreach (var usuario in Model.Usuarios)
+                    {
+                        var esUsuarioActual = usuario.Email == User.Identity.Name;
+                        <tr>
+                            <td>
+                                <form method="post" asp-action="HacerAdmin" class="d-inline">
+                                    <input type="hidden" name="email" value="@usuario.Email" />
+                                    <button class="btn btn-primary btn-sm me-2" type="submit" @(esUsuarioActual ? "disabled" : "")>
+                                        <i class="bi bi-shield-lock-fill"></i> Hacer Admin
+                                    </button>
+                                </form>
 
-            </tbody>
-        </table>
-    </form>
-}
-else
-{
-    <p>No hay usuarios a mostrar</p>
-}
+                                <form method="post" asp-action="RemoverAdmin" class="d-inline">
+                                    <input type="hidden" name="email" value="@usuario.Email" />
+                                    <button class="btn btn-secondary btn-sm me-2" type="submit" @(esUsuarioActual ? "disabled" : "")>
+                                        <i class="bi bi-person-x-fill"></i> Remover Admin
+                                    </button>
+                                </form>
+                            </td>
+                            <td>
+                                <i class="bi bi-envelope-fill me-1"></i> @usuario.Email
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle-fill"></i> No hay usuarios a mostrar
+        </div>
+    }
+</div>

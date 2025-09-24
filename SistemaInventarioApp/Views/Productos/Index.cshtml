@@ -7,64 +7,89 @@
 @if (TempData["ErrorEliminar"] != null)
 {
     <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
-        <i class="bi bi-exclamation-triangle-fill"></i>
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
         @TempData["ErrorEliminar"]
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
 
-<h2>Lista de Productos</h2>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Lista de Productos</h2>
+        <a class="btn btn-primary shadow-sm" asp-action="Create">
+            <i class="bi bi-plus-circle me-1"></i> Agregar Nuevo Producto
+        </a>
+    </div>
 
-<div class="mb-3 d-flex justify-content-between align-items-center">
-    <a class="btn btn-primary" asp-action="Create">Agregar Nuevo Producto</a>
+    <div class="card shadow-sm mb-4 p-3">
+        <form method="get" asp-action="Index" class="row g-2 align-items-center">
+            <div class="col-md-6">
+                <input type="text" name="search" class="form-control"
+                       placeholder="Buscar por nombre o código"
+                       value="@Context.Request.Query["search"]" />
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-info shadow-sm">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+                <a asp-action="Index" class="btn btn-secondary shadow-sm">
+                    <i class="bi bi-x-circle"></i> Limpiar
+                </a>
+            </div>
+        </form>
+    </div>
 
-    <form method="get" asp-action="Index" class="d-flex">
-        <input type="text" name="search" class="form-control me-2"
-               placeholder="Buscar por nombre o código" value="@Context.Request.Query["search"]" />
-        <button type="submit" class="btn btn-info me-2">Buscar</button>
-        <a asp-action="Index" class="btn btn-secondary">Limpiar filtros</a>
-    </form>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Código de Barras</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.CodigoBarras</td>
+                        <td>@item.Nombre</td>
+                        <td>@item.Descripcion</td>
+                        <td>@string.Format("{0:C}", item.Precio)</td>
+                        <td>
+                            <span class="badge @(item.Stock > 10 ? "bg-success" : item.Stock > 0 ? "bg-warning" : "bg-danger")">
+                                @item.Stock
+                            </span>
+                        </td>
+                        <td>
+                            @{
+                                var esAdmin = User.IsInRole(Constantes.RolAdmin);
+                            }
+                            @if (esAdmin)
+                            {
+                                <a class="btn btn-warning btn-sm me-1" asp-action="Edit" asp-route-id="@item.Id">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </a>
+                            }
+                            else
+                            {
+                                <button class="btn btn-warning btn-sm me-1" disabled title="Necesitas ser admin para editar">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </button>
+                                <button class="btn btn-danger btn-sm" disabled title="Necesitas ser admin para eliminar">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
-
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>Código de Barras</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.CodigoBarras</td>
-                <td>@item.Nombre</td>
-                <td>@item.Descripcion</td>
-                <td>@string.Format("{0:C}", item.Precio)</td>
-                <td>@item.Stock</td>
-                <td>
-                    @{
-                        // Verificar si el usuario es admin
-                        var esAdmin = User.IsInRole(Constantes.RolAdmin);
-                    }
-                    @if (esAdmin)
-                    {
-                        <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
-                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
-                    }
-                    else
-                    {
-                        <button class="btn btn-warning btn-sm" disabled title="Necesitas ser admin para editar">Editar</button>
-                        <button class="btn btn-danger btn-sm" disabled title="Necesitas ser admin para eliminar">Eliminar</button>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-

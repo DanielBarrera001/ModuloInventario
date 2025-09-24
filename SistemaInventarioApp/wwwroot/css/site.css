@@ -1,91 +1,49 @@
+/* ======================================= */
+/* Tipografía y tamaño */
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* Reset body */
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
+/* ======================================= */
 /* Navbar Brand */
 a.navbar-brand {
     white-space: normal;
     text-align: center;
-    word-break: break-all;
+    word-break: break-word;
+    color: #1b6ec2 !important; /* azul corporativo */
+    font-weight: bold;
 }
 
-/* Links generales */
-a {
-    color: #0077cc;
-}
-
-/* Botón primario */
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-/* Píldoras activas */
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-/* Bordes */
-.border-top {
-    border-top: 1px solid #e5e5e5;
-}
-
-.border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-}
-
-/* Sombra */
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-/* Footer */
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px;
-}
-
-/* Hover en los links de la navbar */
+/* Links navbar */
 .navbar-nav .nav-link {
+    color: #ffffff; /* blanco por defecto */
     position: relative;
     transition: all 0.3s ease;
     padding: 0.5rem 1rem;
     border-radius: 5px;
 }
 
-    /* Hover */
+    /* Hover de links */
     .navbar-nav .nav-link:hover {
-        color: #fff !important;
-        background-color: #0d6efd;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        color: #ffc107 !important; /* amarillo */
+        background-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
-    /* Línea decorativa */
+    /* Línea decorativa de hover */
     .navbar-nav .nav-link::after {
         content: '';
         display: block;
@@ -99,12 +57,11 @@ a {
         border-radius: 2px;
     }
 
-    /* Línea decorativa al hacer hover */
     .navbar-nav .nav-link:hover::after {
         width: 100%;
     }
 
-    /* Pestaña activa */
+    /* Link activo */
     .navbar-nav .nav-link.active {
         background-color: #0d6efd;
         color: #fff !important;
@@ -114,3 +71,117 @@ a {
             width: 100%;
             background: #ffc107;
         }
+
+/* ======================================= */
+/* Botones */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* Botón primario */
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    transition: 0.3s;
+}
+
+    .btn-primary:hover {
+        background-color: #145a9e;
+        border-color: #0f477e;
+        color: #fff;
+    }
+
+/* ======================================= */
+/* Inputs */
+.form-control {
+    border-radius: 0.5rem;
+    border: 1px solid #ced4da;
+    transition: 0.3s;
+}
+
+    /* Inputs focus */
+    .form-control:focus {
+        border-color: #1b6ec2;
+        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    }
+
+/* ======================================= */
+/* Bordes */
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/* ======================================= */
+/* Sombra */
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+/* ======================================= */
+/* Footer */
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
+/* ======================================= */
+/* Cards y contenedores */
+.card {
+    border-radius: 0.75rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+    margin-bottom: 1.5rem;
+}
+
+/* ======================================= */
+/* Tablas */
+.table th, .table td {
+    vertical-align: middle;
+}
+
+/* Badges stock */
+.badge-stock-low {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.badge-stock-medium {
+    background-color: #fd7e14;
+    color: #fff;
+}
+
+.badge-stock-high {
+    background-color: #198754;
+    color: #fff;
+}
+
+/* ======================================= */
+/* Formularios de login / registro */
+.input-group-text {
+    background-color: #ffffff;
+    border-right: 0;
+}
+
+.input-group .form-control {
+    border-left: 0;
+    border-radius: 0.5rem;
+}
+
+/* ======================================= */
+/* Responsive utilities */
+@media (max-width: 576px) {
+    .navbar-nav .nav-link {
+        padding: 0.4rem 0.5rem;
+    }
+}

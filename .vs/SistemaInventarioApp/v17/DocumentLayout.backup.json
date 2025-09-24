@@ -1,14 +1,34 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\",
+  "WorkspaceRootPath": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|c:\\users\\daniel\\source\\repos\\sistemainventarioapp\\sistemainventarioapp\\views\\movimientos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|solutionrelative:sistemainventarioapp\\views\\movimientos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|c:\\users\\daniel\\source\\repos\\moduloinventario\\sistemainventarioapp\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|solutionrelative:sistemainventarioapp\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|c:\\users\\daniel\\source\\repos\\sistemainventarioapp\\sistemainventarioapp\\controllers\\movimientoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|solutionrelative:sistemainventarioapp\\controllers\\movimientoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|c:\\users\\daniel\\source\\repos\\moduloinventario\\sistemainventarioapp\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|solutionrelative:sistemainventarioapp\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|c:\\users\\daniel\\source\\repos\\moduloinventario\\sistemainventarioapp\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|solutionrelative:sistemainventarioapp\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|c:\\users\\daniel\\source\\repos\\moduloinventario\\sistemainventarioapp\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|solutionrelative:sistemainventarioapp\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|c:\\users\\daniel\\source\\repos\\moduloinventario\\sistemainventarioapp\\views\\productos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|solutionrelative:sistemainventarioapp\\views\\productos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|c:\\users\\daniel\\source\\repos\\moduloinventario\\sistemainventarioapp\\views\\usuarios\\registro.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|solutionrelative:sistemainventarioapp\\views\\usuarios\\registro.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|c:\\users\\daniel\\source\\repos\\moduloinventario\\sistemainventarioapp\\views\\usuarios\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15FAA214-7102-413D-AAC9-49CBBE41F5BD}|SistemaInventarioApp\\SistemaInventarioApp.csproj|solutionrelative:sistemainventarioapp\\views\\usuarios\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,32 +38,97 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\SistemaInventarioApp\\Views\\Movimientos\\Index.cshtml",
-              "RelativeDocumentMoniker": "SistemaInventarioApp\\Views\\Movimientos\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\SistemaInventarioApp\\Views\\Movimientos\\Index.cshtml",
-              "RelativeToolTip": "SistemaInventarioApp\\Views\\Movimientos\\Index.cshtml",
-              "ViewState": "AgIAAAwAAAAAAAAAAADwvyQAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-23T04:10:55.797Z",
+              "DocumentIndex": 1,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "SistemaInventarioApp\\wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "SistemaInventarioApp\\wwwroot\\css\\site.css",
+              "ViewState": "AgIAAJUAAAAAAAAAAAAAALsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-09-24T03:57:56.655Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MovimientosController.cs",
-              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\SistemaInventarioApp\\Controllers\\MovimientosController.cs",
-              "RelativeDocumentMoniker": "SistemaInventarioApp\\Controllers\\MovimientosController.cs",
-              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\SistemaInventarioApp\\Controllers\\MovimientosController.cs",
-              "RelativeToolTip": "SistemaInventarioApp\\Controllers\\MovimientosController.cs",
-              "ViewState": "AgIAAGIAAAAAAAAAAAAywIkAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "SistemaInventarioApp\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "SistemaInventarioApp\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAkwBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-24T03:56:45.794Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "SistemaInventarioApp\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "SistemaInventarioApp\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAkwEIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-23T04:10:28.954Z",
+              "WhenOpened": "2025-09-24T03:55:07.69Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "SistemaInventarioApp\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "SistemaInventarioApp\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAKAAAAAAAAAAAAAowMMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-24T03:54:23.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Registro.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\Views\\Usuarios\\Registro.cshtml",
+              "RelativeDocumentMoniker": "SistemaInventarioApp\\Views\\Usuarios\\Registro.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\Views\\Usuarios\\Registro.cshtml",
+              "RelativeToolTip": "SistemaInventarioApp\\Views\\Usuarios\\Registro.cshtml",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAiwC0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-24T03:51:50.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\Views\\Usuarios\\Login.cshtml",
+              "RelativeDocumentMoniker": "SistemaInventarioApp\\Views\\Usuarios\\Login.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\Views\\Usuarios\\Login.cshtml",
+              "RelativeToolTip": "SistemaInventarioApp\\Views\\Usuarios\\Login.cshtml",
+              "ViewState": "AgIAABoAAAAAAAAAAAAiwD0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-24T03:51:02.641Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\Views\\Productos\\Index.cshtml",
+              "RelativeDocumentMoniker": "SistemaInventarioApp\\Views\\Productos\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\Views\\Productos\\Index.cshtml",
+              "RelativeToolTip": "SistemaInventarioApp\\Views\\Productos\\Index.cshtml",
+              "ViewState": "AgIAADwAAAAAAAAAAAAiwE8AAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-24T03:49:59.701Z",
               "EditorCaption": ""
             }
           ]

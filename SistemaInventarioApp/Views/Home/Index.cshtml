@@ -1,50 +1,52 @@
 ﻿@using SistemaInventarioApp.Entidades
+@using Newtonsoft.Json
 @model SistemaInventarioApp.Controllers.DashboardViewModel
+
 @{
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="container py-5">
-    <h1 class="mb-4 text-primary">Panel de Control</h1>
+<div class="container py-4">
+    <h1 class="mb-4 text-primary fw-bold">📊 Panel de Control</h1>
 
-    <!-- Tarjetas resumen -->
+    <!-- Resumen -->
     <div class="row mb-4">
         <div class="col-md-6">
-            <div class="card text-white bg-info shadow-sm">
-                <div class="card-body">
+            <div class="card text-white bg-primary shadow">
+                <div class="card-body text-center">
                     <h5 class="card-title">Total de Productos</h5>
-                    <p class="card-text fs-3">@Model.TotalProductos</p>
+                    <p class="display-6">@Model.TotalProductos</p>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card text-white bg-success shadow-sm">
-                <div class="card-body">
+            <div class="card text-white bg-success shadow">
+                <div class="card-body text-center">
                     <h5 class="card-title">Valor Total Inventario</h5>
-                    <p class="card-text fs-3">$@Model.ValorTotalInventario.ToString("N2")</p>
+                    <p class="display-6">$@Model.ValorTotalInventario.ToString("N2")</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row g-4">
-        <!-- Últimos Productos -->
+    <!-- Últimos productos y stock bajo -->
+    <div class="row g-4 mb-4">
         <div class="col-md-6">
-            <div class="card shadow-sm border-primary">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Últimos Productos Ingresados</h5>
+            <div class="card border-info shadow">
+                <div class="card-header bg-info text-white fw-bold">
+                    Últimos Productos Ingresados
                 </div>
                 <div class="card-body">
                     @if (Model.UltimosProductos.Any())
                     {
-                        <ul class="list-group list-group-flush">
+                        <ul class="list-group">
                             @foreach (var producto in Model.UltimosProductos)
                             {
                                 <li class="list-group-item">
-                                    <div><strong>ID:</strong> @producto.Id</div>
-                                    <div><strong>Nombre:</strong> @producto.Nombre</div>
-                                    <div><strong>Código:</strong> @producto.CodigoBarras</div>
-                                    <div><strong>Stock:</strong> @producto.Stock</div>
+                                    <strong>@producto.Nombre</strong>
+                                    <div class="small text-muted">
+                                        Código: @producto.CodigoBarras | Stock: @producto.Stock
+                                    </div>
                                 </li>
                             }
                         </ul>
@@ -57,24 +59,23 @@
             </div>
         </div>
 
-        <!-- Productos con Stock Bajo -->
         <div class="col-md-6">
-            <div class="card shadow-sm border-warning">
-                <div class="card-header bg-warning text-dark">
-                    <h5 class="mb-0">Productos con Stock Bajo (&lt;15)</h5>
+            <div class="card border-warning shadow">
+                <div class="card-header bg-warning text-dark fw-bold">
+                    Productos con Stock Bajo (&lt;15)
                 </div>
                 <div class="card-body">
                     @if (Model.ProductosStockBajo.Any())
                     {
-                        <ul class="list-group list-group-flush">
+                        <ul class="list-group">
                             @foreach (var producto in Model.ProductosStockBajo)
                             {
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <div>
-                                        <strong>@producto.Nombre</strong><br />
-                                        <small>Código: @producto.CodigoBarras</small>
+                                        <strong>@producto.Nombre</strong>
+                                        <div class="small text-muted">Código: @producto.CodigoBarras</div>
                                     </div>
-                                    <span class="badge bg-danger rounded-pill">@producto.Stock</span>
+                                    <span class="badge bg-danger fs-6">@producto.Stock</span>
                                 </li>
                             }
                         </ul>
@@ -88,54 +89,107 @@
         </div>
     </div>
 
-    <!-- Últimos Movimientos -->
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card shadow-sm border-info">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">Últimos 10 Movimientos</h5>
-                </div>
+    <!-- Gráficos -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-light fw-bold">Productos con Menor Stock</div>
                 <div class="card-body">
-                    @if (Model.UltimosMovimientos.Any())
-                    {
-                        <table class="table table-striped table-bordered mb-0">
-                            <thead class="table-secondary">
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Código</th>
-                                    <th>Cantidad</th>
-                                    <th>Tipo</th>
-                                    <th>Fecha/Hora</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var m in Model.UltimosMovimientos)
-                                {
-                                    var tipoTexto = m.Tipo switch
-                                    {
-                                        TipoMovimiento.NuevoProducto => "Nuevo Producto",
-                                        TipoMovimiento.Ingreso => "Ingreso",
-                                        TipoMovimiento.Salida => "Salida",
-                                        _ => m.Tipo.ToString()
-                                    };
-                                    <tr>
-                                        <td>@m.Producto.Nombre</td>
-                                        <td>@m.Producto.CodigoBarras</td>
-                                        <td>@m.Cantidad</td>
-                                        <td>@tipoTexto</td>
-                                        <td>@m.Fecha.ToString("yyyy-MM-dd HH:mm:ss")</td>
-                                    </tr>
-                                }
+                    <canvas id="stockChart"></canvas>
+                </div>
+            </div>
+        </div>
 
-                            </tbody>
-                        </table>
-                    }
-                    else
-                    {
-                        <p class="text-muted">No hay movimientos recientes.</p>
-                    }
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-light fw-bold">Movimientos por Tipo</div>
+                <div class="card-body">
+                    <canvas id="movimientosChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Últimos movimientos -->
+    <div class="card border-secondary shadow">
+        <div class="card-header bg-secondary text-white fw-bold">
+            Últimos 10 Movimientos
+        </div>
+        <div class="card-body">
+            @if (Model.UltimosMovimientos.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Producto</th>
+                                <th>Código</th>
+                                <th>Cantidad</th>
+                                <th>Tipo</th>
+                                <th>Fecha/Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var m in Model.UltimosMovimientos)
+                            {
+                                var tipoTexto = m.Tipo switch
+                                {
+                                    TipoMovimiento.NuevoProducto => "Nuevo Producto",
+                                    TipoMovimiento.Ingreso => "Ingreso",
+                                    TipoMovimiento.Salida => "Salida",
+                                    _ => m.Tipo.ToString()
+                                };
+                                <tr>
+                                    <td>@m.Producto?.Nombre</td>
+                                    <td>@m.Producto?.CodigoBarras</td>
+                                    <td>@m.Cantidad</td>
+                                    <td>@tipoTexto</td>
+                                    <td>@m.Fecha.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">No hay movimientos recientes.</p>
+            }
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Datos pasados desde el modelo
+        var labelsStock = @Html.Raw(JsonConvert.SerializeObject(Model.LabelsStock));
+        var dataStock = @Html.Raw(JsonConvert.SerializeObject(Model.DataStock));
+        var labelsMovimientos = @Html.Raw(JsonConvert.SerializeObject(Model.LabelsMovimientos));
+        var dataMovimientos = @Html.Raw(JsonConvert.SerializeObject(Model.DataMovimientos));
+
+        // Gráfico stock
+        new Chart(document.getElementById("stockChart"), {
+            type: 'doughnut',
+            data: {
+                labels: labelsStock,
+                datasets: [{
+                    data: dataStock,
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8BC34A', '#FF9800']
+                }]
+            }
+        });
+
+        // Gráfico movimientos
+        new Chart(document.getElementById("movimientosChart"), {
+            type: 'doughnut',
+            data: {
+                labels: labelsMovimientos,
+                datasets: [{
+                    data: dataMovimientos,
+                    backgroundColor: ['#4CAF50', '#F44336', '#2196F3']
+                }]
+            }
+        });
+    </script>
+}

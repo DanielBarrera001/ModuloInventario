@@ -1,39 +1,73 @@
 ﻿@using SistemaInventarioApp.Entidades
 @inject ApplicationDbContext Context
 
-<h2>Reportes</h2>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">📊 Reportes del Inventario</h2>
 
-<div class="row">
-    <div class="col-md-4">
-        <h5>Reporte Diario</h5>
-        <form method="get" asp-action="Generar">
-            <input type="hidden" name="tipo" value="diario" />
-            <input type="date" name="fecha" class="form-control mb-2" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-            <button type="submit" class="btn btn-primary">Generar PDF</button>
-        </form>
-    </div>
+    <div class="row g-4">
 
-    <div class="col-md-4">
-        <h5>Reporte Mensual</h5>
-        <form method="get" asp-action="Generar">
-            <input type="hidden" name="tipo" value="mensual" />
-            <input type="month" name="fecha" class="form-control mb-2" value="@DateTime.Today.ToString("yyyy-MM")" />
-            <button type="submit" class="btn btn-primary">Generar PDF</button>
-        </form>
-    </div>
+        <!-- Reporte Diario -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-calendar-day"></i> Diario</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get" asp-action="Generar">
+                        <input type="hidden" name="tipo" value="diario" />
+                        <div class="mb-3">
+                            <label class="form-label">Seleccionar fecha</label>
+                            <input type="date" name="fecha" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100"><i class="bi bi-file-earmark-pdf"></i> Generar PDF</button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-    <div class="col-md-4">
-        <h5>Reporte por Producto</h5>
-        <form method="get" asp-action="Generar">
-            <input type="hidden" name="tipo" value="producto" />
-            <select name="productoId" class="form-select mb-2">
-                <option value="">-- Seleccionar producto --</option>
-                @foreach (var p in Context.Productos)
-                {
-                    <option value="@p.Id">@p.Nombre (@p.CodigoBarras)</option>
-                }
-            </select>
-            <button type="submit" class="btn btn-primary">Generar PDF</button>
-        </form>
+        <!-- Reporte Mensual -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-calendar3"></i> Mensual</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get" asp-action="Generar">
+                        <input type="hidden" name="tipo" value="mensual" />
+                        <div class="mb-3">
+                            <label class="form-label">Seleccionar mes</label>
+                            <input type="month" name="fecha" class="form-control" value="@DateTime.Today.ToString("yyyy-MM")" />
+                        </div>
+                        <button type="submit" class="btn btn-success w-100"><i class="bi bi-file-earmark-pdf"></i> Generar PDF</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reporte por Producto -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="bi bi-box-seam"></i> Por Producto</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get" asp-action="Generar">
+                        <input type="hidden" name="tipo" value="producto" />
+                        <div class="mb-3">
+                            <label class="form-label">Seleccionar producto</label>
+                            <select name="productoId" class="form-select">
+                                <option value="">-- Seleccionar producto --</option>
+                                @foreach (var p in Context.Productos)
+                                {
+                                    <option value="@p.Id">@p.Nombre (@p.CodigoBarras)</option>
+                                }
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100"><i class="bi bi-file-earmark-pdf"></i> Generar PDF</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

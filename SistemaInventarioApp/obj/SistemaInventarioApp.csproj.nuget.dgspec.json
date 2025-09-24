@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\SistemaInventarioApp\\SistemaInventarioApp.csproj": {}
+    "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\SistemaInventarioApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\SistemaInventarioApp\\SistemaInventarioApp.csproj": {
+    "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\SistemaInventarioApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\SistemaInventarioApp\\SistemaInventarioApp.csproj",
+        "projectUniqueName": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\SistemaInventarioApp.csproj",
         "projectName": "SistemaInventarioApp",
-        "projectPath": "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\SistemaInventarioApp\\SistemaInventarioApp.csproj",
+        "projectPath": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\SistemaInventarioApp.csproj",
         "packagesPath": "C:\\Users\\Daniel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Daniel\\source\\repos\\SistemaInventarioApp\\SistemaInventarioApp\\obj\\",
+        "outputPath": "C:\\Users\\Daniel\\source\\repos\\ModuloInventario\\SistemaInventarioApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -68,6 +68,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.9, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.4, )"
             },
             "QuestPDF": {
               "target": "Package",

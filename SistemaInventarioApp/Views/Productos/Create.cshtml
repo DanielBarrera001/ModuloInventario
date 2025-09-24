@@ -1,42 +1,51 @@
 ﻿@model SistemaInventarioApp.Entidades.Producto
 
-<h2>Agregar Producto</h2>
+<div class="container mt-5">
+    <div class="card shadow rounded">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Agregar Producto</h3>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="CodigoBarras" class="form-label"><i class="bi bi-upc-scan"></i> Código de Barras</label>
+                        <input asp-for="CodigoBarras" class="form-control" placeholder="Ingrese código de barras" />
+                        <span asp-validation-for="CodigoBarras" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Nombre" class="form-label"><i class="bi bi-card-text"></i> Nombre</label>
+                        <input asp-for="Nombre" class="form-control" placeholder="Ingrese nombre del producto" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                </div>
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="CodigoBarras"></label>
-        <input asp-for="CodigoBarras" class="form-control" />
-        <span asp-validation-for="CodigoBarras" class="text-danger"></span>
+                <div class="mb-3">
+                    <label asp-for="Descripcion" class="form-label"><i class="bi bi-text-paragraph"></i> Descripción</label>
+                    <input asp-for="Descripcion" class="form-control" placeholder="Descripción del producto" />
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Precio" class="form-label"><i class="bi bi-cash"></i> Precio</label>
+                        <input asp-for="Precio" class="form-control" placeholder="0.00" />
+                        <span asp-validation-for="Precio" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Stock" class="form-label"><i class="bi bi-stack"></i> Stock</label>
+                        <input asp-for="Stock" class="form-control" placeholder="Cantidad disponible" />
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success me-2"><i class="bi bi-check-circle"></i> Guardar</button>
+                    <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Cancelar</a>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label asp-for="Nombre"></label>
-        <input asp-for="Nombre" class="form-control" />
-        <span asp-validation-for="Nombre" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Descripcion"></label>
-        <input asp-for="Descripcion" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Precio"></label>
-        <input asp-for="Precio" class="form-control" />
-        <span asp-validation-for="Precio" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Stock"></label>
-        <input asp-for="Stock" class="form-control" />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-</form>
+</div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }
