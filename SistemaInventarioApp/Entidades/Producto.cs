@@ -9,21 +9,19 @@ namespace SistemaInventarioApp.Entidades
     {
         public int Id { get; set; }
 
-        [StringLength(250)]
-        [Required]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Nombre { get; set; }
 
         public string Descripcion { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public double? Precio { get; set; }
 
         public int Stock { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string CodigoBarras { get; set; }
 
         public ICollection<Movimiento> Movimientos { get; set; } = new List<Movimiento>();
-
     }
 }

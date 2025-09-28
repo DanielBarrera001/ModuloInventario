@@ -5,12 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SistemaInventarioApp.Entidades
 {
 
-    // Define la enumeración para los tipos de movimiento
     public enum TipoMovimiento
     {
         Ingreso,
         Salida,
-        NuevoProducto // Valor para cuando se crea un producto por primera vez
+        NuevoProducto 
     }
 
     public class Movimiento
@@ -31,8 +30,7 @@ namespace SistemaInventarioApp.Entidades
 
         [ForeignKey("ProductoId")]
 
-        // Agrega esta línea para restringir la eliminación en cascada.
         [DeleteBehavior(DeleteBehavior.Restrict)]
-        public Producto Producto { get; set; } // Propiedad de navegación
+        public Producto Producto { get; set; } 
     }
 }

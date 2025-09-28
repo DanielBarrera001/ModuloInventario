@@ -4,10 +4,10 @@ namespace SistemaInventarioApp.Models
 {
     public class RegistroViewModel
     {
-        [Required(ErrorMessage = "Error.Requerido")]
-        [EmailAddress(ErrorMessage = "Error.Email")]
+        [Required(ErrorMessage = "Ingresa el correo electronico")]
+        [EmailAddress(ErrorMessage = "El campo {0} debe contener un correo valido")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Error.Requerido")]
+        [Required(ErrorMessage = "Ingresa la contraseña")]
         public string Password { get; set; }
     }
 }

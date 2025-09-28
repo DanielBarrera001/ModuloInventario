@@ -7,16 +7,14 @@
 <div class="container-fluid d-flex justify-content-center" style="background-color: #f5f6fa; padding: 10px 0;">
     <div class="row shadow" style="border-radius: 15px; overflow: hidden; max-width: 900px; width: 100%; background-color: #ffffff;">
 
-        <!-- Lado izquierdo: Imagen / Ilustración con degradado -->
         <div class="col-md-6 d-none d-md-flex justify-content-center align-items-center"
-             style="background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);">
+                    >
             <img src="~/images/login-illustration.png" alt="Illustration" class="img-fluid" style="padding: 30px; max-height: 400px;">
         </div>
 
-        <!-- Lado derecho: Formulario -->
         <div class="col-md-6 p-5 d-flex flex-column justify-content-center">
             <h3 class="fw-bold mb-2" style="font-size: 1.8rem; color: #333;">Sistema de Inventario</h3>
-            <p class="text-primary mb-4 fw-bold" style="font-size: 1.1rem;">Despensa Jades</p>
+            <p class="text-primary mb-4 fw-bold" style="font-size: 1.1rem;">Despensa Jadis</p>
 
             @if (ViewData.Keys.Contains("mensaje"))
             {
@@ -25,25 +23,28 @@
                 </div>
             }
 
-            <form asp-action="Login">
-
-                <!-- Input Email -->
+            <form asp-action="Login" autocomplete="off">
                 <div class="mb-3">
                     <span asp-validation-for="Email" class="text-danger d-block mb-1"></span>
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0"><i class="bi bi-envelope"></i></span>
                         <input asp-for="Email" class="form-control form-control-lg border-start-0" placeholder="Correo electrónico"
-                               style="border-radius: 0.5rem; border: 1px solid #ced4da; transition: 0.3s;" />
+                                               style="border-radius: 0.5rem; border: 1px solid #ced4da; transition: 0.3s;"
+                               autocomplete="username" />                    
                     </div>
                 </div>
 
-                <!-- Input Contraseña -->
                 <div class="mb-3">
                     <span asp-validation-for="Password" class="text-danger d-block mb-1"></span>
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0"><i class="bi bi-lock"></i></span>
                         <input asp-for="Password" type="password" class="form-control form-control-lg border-start-0" placeholder="Contraseña"
-                               style="border-radius: 0.5rem; border: 1px solid #ced4da; transition: 0.3s;" />
+                                               style="border-radius: 0.5rem; border: 1px solid #ced4da; transition: 0.3s;"
+                               autocomplete="new-password" />                    
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" asp-for="Recuerdame" />
+                        <label class="form-check-label" asp-for="Recuerdame"></label>
                     </div>
                 </div>
 
