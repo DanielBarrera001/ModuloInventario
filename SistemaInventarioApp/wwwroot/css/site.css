@@ -30,7 +30,7 @@ body {
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('/images/login-illustration.png');
+        background-image: url('/images/ranita_logo.png');
         background-repeat: no-repeat;
         background-position: right bottom;
         background-size: 350px auto;
@@ -198,4 +198,58 @@ a.navbar-brand {
     .navbar-nav .nav-link {
         padding: 0.4rem 0.5rem;
     }
+}
+
+/* 1. Estilo para el contenedor de la imagen grande (Hero Banner) */
+#hero-banner {
+    /* Establece la altura que quieres para la imagen grande */
+    height: 350px; /* Ajusta este valor (por ejemplo, 350px) */
+    background-image: url('../images/tu-imagen-grande.jpg'); /* ¡Cambia esta ruta! */
+    background-size: cover;
+    background-position: center;
+    display: flex; /* Para centrar el h1 que puse de ejemplo */
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+}
+
+/* 2. Estilo para la barra de navegación inicial (navbar) */
+#main-navbar {
+    /* Asegura que la navbar esté en la parte inferior del banner inicialmente */
+    position: relative;
+    z-index: 1020; /* Alto para que esté sobre el banner si es necesario */
+    transition: all 0.3s ease-in-out;
+}
+
+/* 3. Clase SCROLLED (Estado al hacer scroll) */
+/* Cuando el body tiene la clase 'scrolled', aplicamos los nuevos estilos */
+
+body.scrolled #hero-banner {
+    /* Ocultar la imagen grande */
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0; /* Asegurar que no quede espacio */
+    margin: 0;
+}
+
+body.scrolled #main-navbar {
+    /* Hacer que la navbar se pegue en la parte superior */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    /* Opcional: Cambiar el color de fondo si quieres que sea diferente */
+    /* background-color: #343a40 !important; */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* 4. Separador de contenido (Para que el contenido de la página no se esconda bajo el nav fixed) */
+#content-spacer {
+    height: 0; /* Inicialmente no tiene altura */
+    transition: height 0.3s ease-in-out;
+}
+
+body.scrolled #content-spacer {
+    /* Darle la altura de la navbar (aproximadamente 60px) al hacer scroll */
+    height: 60px; /* AJUSTA este valor al alto final de tu navbar fixed */
 }

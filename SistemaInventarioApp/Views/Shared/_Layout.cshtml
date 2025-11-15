@@ -10,13 +10,22 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <!-- Navbar -->
-    <!-- Navbar -->
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom shadow-sm mb-3">
+
+    <header id="main-header">
+
+        <div id="hero-banner" class="d-flex align-items-center justify-content-center">
+            <div class="text-center p-5">
+                <h1 class="text-white display-4 fw-bold shadow-text">
+                    Sistema de Inventario - UDP Centro de Copias La Ranita
+                </h1>
+                <p class="text-white-50 lead shadow-text">Gestión eficiente de tus recursos.</p>
+            </div>
+        </div>
+
+        <nav id="main-navbar" class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
-                    Sistema de Inventario - Despensa Jadis
+                    Sistema de Inventario
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,21 +64,18 @@
             </div>
         </nav>
     </header>
+    <div id="content-spacer"></div>
 
-
-    <!-- Contenedor principal -->
     <div class="container mt-4" style="max-width: 1200px;">
         <main role="main" class="pb-4">
             @RenderBody()
         </main>
     </div>
 
-    <!-- Footer -->
     <footer class="border-top footer text-center text-muted bg-light py-3">
-        &copy; @DateTime.Now.Year - Sistema de Inventario Despensa Jadis
+        &copy; @DateTime.Now.Year - Sistema de Inventario UDP Centro de Copias La Ranita
     </footer>
 
-    <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
