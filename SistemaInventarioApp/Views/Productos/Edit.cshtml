@@ -24,15 +24,15 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Stock</label>
-        <input class="form-control" value="@Model.Stock" readonly />
-        <input type="hidden" asp-for="Stock" />
+        <label asp-for="Stock" class="form-label">Stock</label>
+        <input asp-for="Stock" class="form-control" />
+        <span asp-validation-for="Stock" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Código de Barras</label>
-        <input class="form-control" value="@Model.CodigoBarras" readonly />
-        <input type="hidden" asp-for="CodigoBarras" />
+        <label asp-for="CodigoBarras" class="form-label">Código de Barras</label>
+        <input asp-for="CodigoBarras" class="form-control" />
+        <span asp-validation-for="CodigoBarras" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Guardar Cambios</button>

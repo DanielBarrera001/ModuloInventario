@@ -15,56 +15,60 @@
 
         <div id="hero-banner" class="d-flex align-items-center justify-content-center">
             <div class="text-center p-5">
+
+                <img src="~/images/ranitaLogo.png" alt="Logo La Ranita" class="logo-ranita" />
+
                 <h1 class="text-white display-4 fw-bold shadow-text">
-                    Sistema de Inventario - UDP Centro de Copias La Ranita
+                    UDP Centro de Copias La Ranita
                 </h1>
                 <p class="text-white-50 lead shadow-text">Gestión eficiente de tus recursos.</p>
             </div>
         </div>
-
-        <nav id="main-navbar" class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom shadow-sm">
-            <div class="container-fluid">
-                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
-                    Sistema de Inventario
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold" asp-controller="Home" asp-action="Index">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold" asp-controller="Productos" asp-action="Index">Lista de productos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold" asp-controller="Productos" asp-action="Reingreso">Reingreso de producto</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold" asp-controller="Productos" asp-action="Salida">Salida de producto</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold" asp-controller="Reportes" asp-action="Index">Reportes</a>
-                        </li>
-
-                        @if (User.IsInRole(Constantes.RolAdmin))
-                        {
+        <div id="main-navbar-container">
+            <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom shadow-sm">
+                <div class="container-fluid">
+                    <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
+                        Sistema de Inventario
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link fw-bold" asp-controller="Usuarios" asp-action="Listado">Listado de usuarios</a>
+                                <a class="nav-link fw-bold" asp-controller="Home" asp-action="Index">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-bold" asp-controller="Movimientos" asp-action="Index">Movimientos</a>
+                                <a class="nav-link fw-bold" asp-controller="Productos" asp-action="Index">Lista de productos</a>
                             </li>
-                        }
-                    </ul>
-                    <partial name="_LinksLogin" />
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold" asp-controller="Productos" asp-action="Reingreso">Reingreso de producto</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold" asp-controller="Productos" asp-action="Salida">Salida de producto</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold" asp-controller="Reportes" asp-action="Index">Reportes</a>
+                            </li>
+
+                            @if (User.IsInRole(Constantes.RolAdmin))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link fw-bold" asp-controller="Usuarios" asp-action="Listado">Listado de usuarios</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link fw-bold" asp-controller="Movimientos" asp-action="Index">Movimientos</a>
+                                </li>
+                            }
+                        </ul>
+                        <partial name="_LinksLogin" />
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
     </header>
-    <div id="content-spacer"></div>
+
 
     <div class="container mt-4" style="max-width: 1200px;">
         <main role="main" class="pb-4">

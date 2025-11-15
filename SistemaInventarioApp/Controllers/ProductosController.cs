@@ -101,6 +101,8 @@ namespace SistemaInventarioApp.Controllers
                     productoOriginal.Nombre = producto.Nombre;
                     productoOriginal.Descripcion = producto.Descripcion;
                     productoOriginal.Precio = producto.Precio;
+                    productoOriginal.Stock = producto.Stock;
+                    productoOriginal.CodigoBarras = producto.CodigoBarras;
 
                     _context.Update(productoOriginal);
                     await _context.SaveChangesAsync();

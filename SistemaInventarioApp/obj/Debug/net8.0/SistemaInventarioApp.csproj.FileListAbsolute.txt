@@ -430,3 +430,11 @@ C:\Users\Daniel\source\repos\ModuloInventario\SistemaInventarioApp\obj\Debug\net
 C:\Users\Daniel\source\repos\ModuloInventario\SistemaInventarioApp\obj\Debug\net8.0\SistemaInventarioApp.genruntimeconfig.cache
 C:\Users\Daniel\source\repos\ModuloInventario\SistemaInventarioApp\obj\Debug\net8.0\ref\SistemaInventarioApp.dll
 C:\Users\Daniel\source\repos\ModuloInventario\SistemaInventarioApp\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\Daniel\source\repos\ModuloInventario\SistemaInventarioApp\bin\Debug\net8.0\ClosedXML.dll
+C:\Users\Daniel\source\repos\ModuloInventario\SistemaInventarioApp\bin\Debug\net8.0\ClosedXML.Parser.dll
+C:\Users\Daniel\source\repos\ModuloInventario\SistemaInventarioApp\bin\Debug\net8.0\DocumentFormat.OpenXml.dll
+C:\Users\Daniel\source\repos\ModuloInventario\SistemaInventarioApp\bin\Debug\net8.0\DocumentFormat.OpenXml.Framework.dll
+C:\Users\Daniel\source\repos\ModuloInventario\SistemaInventarioApp\bin\Debug\net8.0\ExcelNumberFormat.dll
+C:\Users\Daniel\source\repos\ModuloInventario\SistemaInventarioApp\bin\Debug\net8.0\RBush.dll
+C:\Users\Daniel\source\repos\ModuloInventario\SistemaInventarioApp\bin\Debug\net8.0\SixLabors.Fonts.dll
+C:\Users\Daniel\source\repos\ModuloInventario\SistemaInventarioApp\bin\Debug\net8.0\System.IO.Packaging.dll
