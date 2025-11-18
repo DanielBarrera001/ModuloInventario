@@ -4,9 +4,30 @@ using Microsoft.EntityFrameworkCore;
 using SistemaInventarioApp;
 using SistemaInventarioApp.Entidades;
 using SistemaInventarioApp.Servicios;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SistemaInventarioApp.Controllers
 {
+    // Clases Auxiliares para el ViewModel de Estadísticas
+    public class ProductoMovimientoVolumen
+    {
+        public string NombreProducto { get; set; }
+        public string CodigoBarras { get; set; }
+        public int CantidadMovida { get; set; }
+        public int StockActual { get; set; }
+    }
+
+    public class EstadisticasMovimientosViewModel
+    {
+        public List<ProductoMovimientoVolumen> VolumenIngresoNuevo { get; set; } = new();
+        public List<ProductoMovimientoVolumen> VolumenReingreso { get; set; } = new();
+        public List<ProductoMovimientoVolumen> VolumenSalida { get; set; } = new();
+    }
+
+
+    [Authorize(Roles = Constantes.RolAdmin)]
     public class MovimientosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -17,8 +38,57 @@ namespace SistemaInventarioApp.Controllers
         }
 
 
+        // GET: Movimientos/EstadisticasSalida (Actualizado para seleccionar mes)
+        public async Task<IActionResult> EstadisticasSalida(DateTime? mesSeleccionado)
+        {
+            var hoy = DateTime.Today;
+
+            // 1. Determinar el primer y último día del mes a consultar
+            // Si no se selecciona mes, por defecto es el primer día del mes actual.
+            var mesBase = mesSeleccionado.HasValue ? mesSeleccionado.Value : new DateTime(hoy.Year, hoy.Month, 1);
+
+            var fechaInicio = new DateTime(mesBase.Year, mesBase.Month, 1);
+            var fechaFin = fechaInicio.AddMonths(1).AddDays(-1);
+
+            // 2. Ajustar la fecha fin para que no exceda el día de hoy
+            if (fechaFin > hoy)
+            {
+                fechaFin = hoy;
+            }
+
+            // Pasar el mes base a la vista para mantener la selección en el dropdown
+            ViewData["MesSeleccionado"] = mesBase;
+
+            // Función de ayuda para calcular el volumen por tipo de movimiento en el rango de fechas
+            async Task<List<ProductoMovimientoVolumen>> ObtenerVolumen(TipoMovimiento tipo)
+            {
+                return await _context.Movimientos
+                    // Filtra por el rango de fechas calculado
+                    .Where(m => m.Tipo == tipo && m.Fecha.Date >= fechaInicio.Date && m.Fecha.Date <= fechaFin.Date)
+                    .Include(m => m.Producto)
+                    .GroupBy(m => m.ProductoId)
+                    .Select(g => new ProductoMovimientoVolumen
+                    {
+                        NombreProducto = g.First().Producto.Nombre,
+                        CodigoBarras = g.First().Producto.CodigoBarras,
+                        CantidadMovida = g.Sum(m => m.Cantidad),
+                        StockActual = g.First().Producto.Stock
+                    })
+                    .OrderByDescending(p => p.CantidadMovida) // Ordena de mayor a menor volumen
+                    .ToListAsync(); // Obtiene la lista completa de productos que tuvieron movimiento
+            }
+
+            var model = new EstadisticasMovimientosViewModel
+            {
+                VolumenIngresoNuevo = await ObtenerVolumen(TipoMovimiento.NuevoProducto),
+                VolumenReingreso = await ObtenerVolumen(TipoMovimiento.Ingreso),
+                VolumenSalida = await ObtenerVolumen(TipoMovimiento.Salida)
+            };
+
+            return View(model);
+        }
+
         // GET: Movimientos
-        [Authorize(Roles = Constantes.RolAdmin)]
         public async Task<IActionResult> Index(string search, DateTime? fechaInicio, DateTime? fechaFin, string tipo)
         {
             var movimientosQuery = _context.Movimientos.Include(m => m.Producto).AsQueryable();
@@ -40,7 +110,7 @@ namespace SistemaInventarioApp.Controllers
             if (fechaInicio.HasValue && fechaFin.HasValue && fechaFin.Value.Date < fechaInicio.Value.Date)
             {
                 TempData["Error"] = "La fecha de fin no puede ser anterior a la fecha de inicio.";
-                fechaFin = fechaInicio; // opcional: fijamos fechaFin igual a fechaInicio
+                fechaFin = fechaInicio;
             }
 
             if (!string.IsNullOrEmpty(search))
@@ -76,7 +146,6 @@ namespace SistemaInventarioApp.Controllers
             var movimientos = await movimientosQuery.OrderByDescending(m => m.Fecha).ToListAsync();
             return View(movimientos);
         }
-
 
 
         // GET: Movimientos/Delete/5

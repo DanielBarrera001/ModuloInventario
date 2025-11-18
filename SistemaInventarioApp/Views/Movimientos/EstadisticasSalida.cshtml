@@ -1,0 +1,100 @@
+﻿@using SistemaInventarioApp.Controllers
+@using System.Globalization
+@model SistemaInventarioApp.Controllers.EstadisticasMovimientosViewModel
+
+@{
+    ViewData["Title"] = "Estadísticas de Movimiento por Tipo";
+
+    // 1. Recuperar el mes seleccionado del controlador
+    var mesSeleccionado = (DateTime)ViewData["MesSeleccionado"];
+
+    // 2. Generar opciones para el dropdown de los últimos 12 meses
+    var mesesDisponibles = new List<DateTime>();
+    var hoy = DateTime.Today;
+    for (int i = 0; i < 12; i++)
+    {
+        mesesDisponibles.Add(hoy.AddMonths(-i));
+    }
+
+    // 3. Definir la cultura española para los nombres de los meses
+    var culturaEspanola = new CultureInfo("es-ES");
+}
+
+<div class="container py-4">
+    <h1 class="mb-4 text-primary fw-bold">📊 Volumen de Movimiento por Tipo</h1>
+
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mb-4">
+        <i class="bi bi-arrow-left"></i> Volver al Dashboard
+    </a>
+
+    <form asp-action="EstadisticasSalida" method="get" class="mb-4 p-3 border rounded shadow-sm bg-light">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <label for="mesSeleccionado" class="col-form-label fw-bold">📅 Consultar Mes:</label>
+            </div>
+            <div class="col-auto">
+                <select name="mesSeleccionado" id="mesSeleccionado" class="form-select" onchange="this.form.submit()">
+                    @foreach (var mes in mesesDisponibles)
+                    {
+                        var valor = mes.ToString("yyyy-MM-dd");
+                        // Usamos culturaEspanola para el formato de fecha en español
+                        var texto = mes.ToString("MMMM yyyy", culturaEspanola);
+
+                        bool isSelected = mes.Year == mesSeleccionado.Year && mes.Month == mesSeleccionado.Month;
+
+                        <option value="@valor" selected="@isSelected">
+                            @* Se usa ToTitleCase para asegurar que la primera letra del mes esté en mayúscula, lo que mejora la estética *@
+                            @(culturaEspanola.TextInfo.ToTitleCase(texto))
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <p class="lead text-muted">
+        Datos para el mes: **@mesSeleccionado.ToString("MMMM yyyy", culturaEspanola)** (hasta el @mesSeleccionado.ToString("dd/MM/yyyy")).
+        Muestra todos los productos con movimiento, ordenados por volumen descendente.
+    </p>
+
+    <ul class="nav nav-tabs" id="statsTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="salida-tab" data-bs-toggle="tab" data-bs-target="#salida" type="button" role="tab" aria-controls="salida" aria-selected="true">
+                📉 **Salida**
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="reingreso-tab" data-bs-toggle="tab" data-bs-target="#reingreso" type="button" role="tab" aria-controls="reingreso" aria-selected="false">
+                ⬆️ **Reingreso**
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="ingreso-nuevo-tab" data-bs-toggle="tab" data-bs-target="#ingreso-nuevo" type="button" role="tab" aria-controls="ingreso-nuevo" aria-selected="false">
+                ➕ **Ingreso**
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content border border-top-0 p-3 shadow-sm" id="statsTabContent">
+
+        <div class="tab-pane fade show active" id="salida" role="tabpanel" aria-labelledby="salida-tab">
+            <h3 class="mt-2 mb-3 text-danger">Productos con Mayor Volumen de Salida</h3>
+            @await Html.PartialAsync("_MovimientoTable", Model.VolumenSalida)
+        </div>
+
+        <div class="tab-pane fade" id="reingreso" role="tabpanel" aria-labelledby="reingreso-tab">
+            <h3 class="mt-2 mb-3 text-success">Productos con Mayor Volumen de Reingreso de Stock</h3>
+            @await Html.PartialAsync("_MovimientoTable", Model.VolumenReingreso)
+        </div>
+
+        <div class="tab-pane fade" id="ingreso-nuevo" role="tabpanel" aria-labelledby="ingreso-nuevo-tab">
+            <h3 class="mt-2 mb-3 text-primary">Productos con Mayor Volumen en Ingreso de Producto Nuevo</h3>
+            @await Html.PartialAsync("_MovimientoTable", Model.VolumenIngresoNuevo)
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @* Asegúrate de que tu Layout o esta página tenga la referencia a Bootstrap JS para que las pestañas funcionen *@
+}

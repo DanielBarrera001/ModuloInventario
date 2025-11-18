@@ -7,67 +7,61 @@
 }
 
 <div class="container py-4">
-    <h1 class="mb-4 text-primary fw-bold">📊 Panel de Control</h1>
+    <h1 class="mb-4 text-primary fw-bold">🚀 Panel de Control Rápido</h1>
 
-    <!-- Resumen -->
-    <div class="row mb-4">
-        <div class="col-md-6">
+    <div class="row mb-5 justify-content-center">
+        <div class="col-lg-4 col-md-6 mb-3">
+            <a asp-controller="Producto" asp-action="Crear" class="btn btn-primary btn-lg w-100 shadow-sm py-3 d-flex align-items-center justify-content-center">
+                <i class="bi bi-box-seam me-2 fs-4"></i> Ingresar **Nuevo Producto**
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-3">
+            <a asp-controller="Movimiento" asp-action="Ingreso" class="btn btn-success btn-lg w-100 shadow-sm py-3 d-flex align-items-center justify-content-center">
+                <i class="bi bi-arrow-down-left me-2 fs-4"></i> **Reingresar** Stock
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-3">
+            <a asp-controller="Movimiento" asp-action="Salida" class="btn btn-warning btn-lg w-100 shadow-sm py-3 text-dark d-flex align-items-center justify-content-center">
+                <i class="bi bi-arrow-up-right me-2 fs-4"></i> **Salida** de Producto
+            </a>
+        </div>
+    </div>
+
+    <div class="row mb-5 justify-content-center">
+
+        <div class="col-md-5 mb-3">
             <div class="card text-white bg-primary shadow">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Total de Productos</h5>
+                    <h5 class="card-title">Total de Productos Distintos</h5>
                     <p class="display-6">@Model.TotalProductos</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card text-white bg-success shadow">
+
+        <div class="col-md-5 mb-3">
+            <div class="card text-white bg-danger shadow">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Valor Total Inventario</h5>
-                    <p class="display-6">$@Model.ValorTotalInventario.ToString("N2")</p>
+                    <h5 class="card-title">Total Unidades Movidas (Últ. 30 Días)</h5>
+                    <p class="display-6">@Model.TotalUnidadesMovidas.ToString("N0")</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Últimos productos y stock bajo -->
     <div class="row g-4 mb-4">
-        <div class="col-md-6">
-            <div class="card border-info shadow">
-                <div class="card-header bg-info text-white fw-bold">
-                    Últimos Productos Ingresados
-                </div>
-                <div class="card-body">
-                    @if (Model.UltimosProductos.Any())
-                    {
-                        <ul class="list-group">
-                            @foreach (var producto in Model.UltimosProductos)
-                            {
-                                <li class="list-group-item">
-                                    <strong>@producto.Nombre</strong>
-                                    <div class="small text-muted">
-                                        Código: @producto.CodigoBarras | Stock: @producto.Stock
-                                    </div>
-                                </li>
-                            }
-                        </ul>
-                    }
-                    else
-                    {
-                        <p class="text-muted">No hay productos registrados aún.</p>
-                    }
-                </div>
-            </div>
-        </div>
 
         <div class="col-md-6">
-            <div class="card border-warning shadow">
-                <div class="card-header bg-warning text-dark fw-bold">
-                    Productos con Stock Bajo (&lt;15)
+            <div class="card border-warning shadow h-100">
+                <div class="card-header bg-warning text-dark fw-bold d-flex justify-content-between align-items-center">
+                    <span>⚠️ Productos con **Stock Bajo** (&lt;15)</span>
+                    <a asp-controller="Producto" asp-action="StockBajoCompleto" class="btn btn-sm btn-dark">
+                        Ver Lista Completa
+                    </a>
                 </div>
                 <div class="card-body">
                     @if (Model.ProductosStockBajo.Any())
                     {
-                        <ul class="list-group">
+                        <ul class="list-group list-group-flush">
                             @foreach (var producto in Model.ProductosStockBajo)
                             {
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -82,18 +76,63 @@
                     }
                     else
                     {
-                        <p class="text-muted">No hay productos con stock bajo.</p>
+                        <div class="alert alert-success text-center" role="alert">
+                            ¡Felicidades! No hay productos con stock bajo que requieran atención.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-success shadow h-100">
+                <div class="card-header bg-success text-white fw-bold d-flex justify-content-between align-items-center">
+                    <span>📈 Productos con **Mayor Salida Hoy** (Top 5)</span>
+                    <a asp-controller="Movimiento" asp-action="EstadisticasSalida" class="btn btn-sm btn-light text-success">
+                        Ver Estadísticas Completas
+                    </a>
+                </div>
+                <div class="card-body">
+                    @if (Model.ProductosMayorSalidaDiaria.Any())
+                    {
+                        <table class="table table-sm table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Producto</th>
+                                    <th class="text-end">Unidades Vendidas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var rank = 1;
+                                }
+                                @foreach (var item in Model.ProductosMayorSalidaDiaria)
+                                {
+                                    <tr>
+                                        <td>@(rank++)</td>
+                                        <td>@item.NombreProducto</td>
+                                        <td class="text-end fw-bold">@item.CantidadVendida</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info text-center" role="alert">
+                            Aún no se han registrado movimientos de salida el día de hoy.
+                        </div>
                     }
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Gráficos -->
     <div class="row g-4 mb-4">
         <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-header bg-light fw-bold">Productos con Menor Stock</div>
+            <div class="card shadow h-100">
+                <div class="card-header bg-light fw-bold">Gráfico: Productos con Menor Stock (Top 5)</div>
                 <div class="card-body">
                     <canvas id="stockChart"></canvas>
                 </div>
@@ -101,60 +140,12 @@
         </div>
 
         <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-header bg-light fw-bold">Movimientos por Tipo</div>
+            <div class="card shadow h-100">
+                <div class="card-header bg-light fw-bold">Gráfico: Volumen de Movimientos (Últimos 30 Días)</div>
                 <div class="card-body">
                     <canvas id="movimientosChart"></canvas>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Últimos movimientos -->
-    <div class="card border-secondary shadow">
-        <div class="card-header bg-secondary text-white fw-bold">
-            Últimos 10 Movimientos
-        </div>
-        <div class="card-body">
-            @if (Model.UltimosMovimientos.Any())
-            {
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Producto</th>
-                                <th>Código</th>
-                                <th>Cantidad</th>
-                                <th>Tipo</th>
-                                <th>Fecha/Hora</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var m in Model.UltimosMovimientos)
-                            {
-                                var tipoTexto = m.Tipo switch
-                                {
-                                    TipoMovimiento.NuevoProducto => "Nuevo Producto",
-                                    TipoMovimiento.Ingreso => "Ingreso",
-                                    TipoMovimiento.Salida => "Salida",
-                                    _ => m.Tipo.ToString()
-                                };
-                                <tr>
-                                    <td>@m.Producto?.Nombre</td>
-                                    <td>@m.Producto?.CodigoBarras</td>
-                                    <td>@m.Cantidad</td>
-                                    <td>@tipoTexto</td>
-                                    <td>@m.Fecha.ToString("yyyy-MM-dd HH:mm:ss")</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            }
-            else
-            {
-                <p class="text-muted">No hay movimientos recientes.</p>
-            }
         </div>
     </div>
 </div>
@@ -168,27 +159,68 @@
         var labelsMovimientos = @Html.Raw(JsonConvert.SerializeObject(Model.LabelsMovimientos));
         var dataMovimientos = @Html.Raw(JsonConvert.SerializeObject(Model.DataMovimientos));
 
-        // Gráfico stock
+        // Gráfico stock (TIPO BARRA)
         new Chart(document.getElementById("stockChart"), {
-            type: 'doughnut',
+            type: 'bar',
             data: {
                 labels: labelsStock,
                 datasets: [{
+                    label: 'Stock Actual',
                     data: dataStock,
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8BC34A', '#FF9800']
+                    backgroundColor: 'rgba(255, 159, 64, 0.7)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 1
                 }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
             }
         });
 
-        // Gráfico movimientos
+        // Gráfico movimientos (TIPO BARRA HORIZONTAL)
         new Chart(document.getElementById("movimientosChart"), {
-            type: 'doughnut',
+            type: 'bar',
             data: {
-                labels: labelsMovimientos,
+                labels: labelsMovimientos.map(l => l === 'Ingreso' ? 'Ingreso' : l === 'Salida' ? 'Salida' : l),
                 datasets: [{
+                    label: 'Unidades Movidas',
                     data: dataMovimientos,
-                    backgroundColor: ['#4CAF50', '#F44336', '#2196F3']
+                    backgroundColor: [
+                        'rgba(76, 175, 80, 0.7)', // Verde para Ingreso
+                        'rgba(244, 67, 54, 0.7)', // Rojo para Salida
+                        'rgba(33, 150, 243, 0.7)' // Azul para otros
+                    ],
+                    borderColor: [
+                        'rgba(76, 175, 80, 1)',
+                        'rgba(244, 67, 54, 1)',
+                        'rgba(33, 150, 243, 1)'
+                    ],
+                    borderWidth: 1
                 }]
+            },
+            options: {
+                indexAxis: 'y', // Hace el gráfico horizontal
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
             }
         });
     </script>
