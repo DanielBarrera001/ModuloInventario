@@ -10,19 +10,28 @@
     <h1 class="mb-4 text-primary fw-bold">🚀 Panel de Control Rápido</h1>
 
     <div class="row mb-5 justify-content-center">
-        <div class="col-lg-4 col-md-6 mb-3">
-            <a asp-controller="Producto" asp-action="Crear" class="btn btn-primary btn-lg w-100 shadow-sm py-3 d-flex align-items-center justify-content-center">
-                <i class="bi bi-box-seam me-2 fs-4"></i> Ingresar **Nuevo Producto**
+
+        <div class="col-12 col-md-6 col-lg-3 mb-3">
+            <a asp-controller="Productos" asp-action="Create" class="btn btn-primary btn-lg w-100 shadow-sm py-3 d-flex align-items-center justify-content-center btn-fixed-height">
+                <i class="bi bi-box-seam me-2 fs-4"></i> Ingresar Nuevo Producto
             </a>
         </div>
-        <div class="col-lg-4 col-md-6 mb-3">
-            <a asp-controller="Movimiento" asp-action="Ingreso" class="btn btn-success btn-lg w-100 shadow-sm py-3 d-flex align-items-center justify-content-center">
-                <i class="bi bi-arrow-down-left me-2 fs-4"></i> **Reingresar** Stock
+
+        <div class="col-12 col-md-6 col-lg-3 mb-3">
+            <a asp-controller="Productos" asp-action="Reingreso" class="btn btn-success btn-lg w-100 shadow-sm py-3 d-flex align-items-center justify-content-center btn-fixed-height">
+                <i class="bi bi-arrow-down-left me-2 fs-4"></i> Reingresar Stock
             </a>
         </div>
-        <div class="col-lg-4 col-md-6 mb-3">
-            <a asp-controller="Movimiento" asp-action="Salida" class="btn btn-warning btn-lg w-100 shadow-sm py-3 text-dark d-flex align-items-center justify-content-center">
-                <i class="bi bi-arrow-up-right me-2 fs-4"></i> **Salida** de Producto
+
+        <div class="col-12 col-md-6 col-lg-3 mb-3">
+            <a asp-controller="Productos" asp-action="Venta" class="btn btn-danger btn-lg w-100 shadow-sm py-3 d-flex align-items-center justify-content-center btn-fixed-height">
+                <i class="bi bi-cash me-2 fs-4"></i> Venta (Salida Comercial)
+            </a>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3 mb-3">
+            <a asp-controller="Productos" asp-action="Salida" class="btn btn-warning btn-lg w-100 shadow-sm py-3 text-dark d-flex align-items-center justify-content-center btn-fixed-height">
+                <i class="bi bi-arrow-up-right me-2 fs-4"></i> Salida (Ajuste/Retiro)
             </a>
         </div>
     </div>
@@ -41,7 +50,7 @@
         <div class="col-md-5 mb-3">
             <div class="card text-white bg-danger shadow">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Total Unidades Movidas (Últ. 30 Días)</h5>
+                    <h5 class="card-title">Ventas Totales Hoy (Unidades)</h5>
                     <p class="display-6">@Model.TotalUnidadesMovidas.ToString("N0")</p>
                 </div>
             </div>
@@ -53,8 +62,8 @@
         <div class="col-md-6">
             <div class="card border-warning shadow h-100">
                 <div class="card-header bg-warning text-dark fw-bold d-flex justify-content-between align-items-center">
-                    <span>⚠️ Productos con **Stock Bajo** (&lt;15)</span>
-                    <a asp-controller="Producto" asp-action="StockBajoCompleto" class="btn btn-sm btn-dark">
+                    <span>⚠️ Productos con Stock Bajo (&lt;15)</span>
+                    <a asp-controller="Productos" asp-action="StockBajoCompleto" class="btn btn-sm btn-dark">
                         Ver Lista Completa
                     </a>
                 </div>
@@ -87,13 +96,13 @@
         <div class="col-md-6">
             <div class="card border-success shadow h-100">
                 <div class="card-header bg-success text-white fw-bold d-flex justify-content-between align-items-center">
-                    <span>📈 Productos con **Mayor Salida Hoy** (Top 5)</span>
-                    <a asp-controller="Movimiento" asp-action="EstadisticasSalida" class="btn btn-sm btn-light text-success">
+                    <span>📈 Productos con Mayor Venta Hoy (Top 5)</span>
+                    <a asp-controller="Movimientos" asp-action="EstadisticasMovimientos" class="btn btn-sm btn-light text-success">
                         Ver Estadísticas Completas
                     </a>
                 </div>
                 <div class="card-body">
-                    @if (Model.ProductosMayorSalidaDiaria.Any())
+                    @if (Model.ProductosMayorVentaDiaria.Any())
                     {
                         <table class="table table-sm table-striped">
                             <thead>
@@ -107,7 +116,7 @@
                                 @{
                                     var rank = 1;
                                 }
-                                @foreach (var item in Model.ProductosMayorSalidaDiaria)
+                                @foreach (var item in Model.ProductosMayorVentaDiaria)
                                 {
                                     <tr>
                                         <td>@(rank++)</td>
@@ -121,7 +130,7 @@
                     else
                     {
                         <div class="alert alert-info text-center" role="alert">
-                            Aún no se han registrado movimientos de salida el día de hoy.
+                            Aún no se han registrado movimientos de venta el día de hoy.
                         </div>
                     }
                 </div>

@@ -9,6 +9,7 @@ namespace SistemaInventarioApp.Entidades
     {
         Ingreso,
         Salida,
+        Venta,
         NuevoProducto 
     }
 

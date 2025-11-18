@@ -5,12 +5,14 @@ using SistemaInventarioApp;
 using SistemaInventarioApp.Entidades;
 using SistemaInventarioApp.Servicios;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SistemaInventarioApp.Controllers
 {
-    // Clases Auxiliares para el ViewModel de Estadísticas
+    // --- CLASES AUXILIARES (VIEW MODELS) ---
+
     public class ProductoMovimientoVolumen
     {
         public string NombreProducto { get; set; }
@@ -23,9 +25,11 @@ namespace SistemaInventarioApp.Controllers
     {
         public List<ProductoMovimientoVolumen> VolumenIngresoNuevo { get; set; } = new();
         public List<ProductoMovimientoVolumen> VolumenReingreso { get; set; } = new();
+        public List<ProductoMovimientoVolumen> VolumenVenta { get; set; } = new();
         public List<ProductoMovimientoVolumen> VolumenSalida { get; set; } = new();
     }
 
+    // --- CONTROLADOR PRINCIPAL ---
 
     [Authorize(Roles = Constantes.RolAdmin)]
     public class MovimientosController : Controller
@@ -38,13 +42,13 @@ namespace SistemaInventarioApp.Controllers
         }
 
 
-        // GET: Movimientos/EstadisticasSalida (Actualizado para seleccionar mes)
-        public async Task<IActionResult> EstadisticasSalida(DateTime? mesSeleccionado)
+        // 1. ACCIÓN DE ESTADÍSTICAS
+        // GET: Movimientos/EstadisticasMovimientos
+        public async Task<IActionResult> EstadisticasMovimientos(DateTime? mesSeleccionado)
         {
             var hoy = DateTime.Today;
 
             // 1. Determinar el primer y último día del mes a consultar
-            // Si no se selecciona mes, por defecto es el primer día del mes actual.
             var mesBase = mesSeleccionado.HasValue ? mesSeleccionado.Value : new DateTime(hoy.Year, hoy.Month, 1);
 
             var fechaInicio = new DateTime(mesBase.Year, mesBase.Month, 1);
@@ -82,12 +86,14 @@ namespace SistemaInventarioApp.Controllers
             {
                 VolumenIngresoNuevo = await ObtenerVolumen(TipoMovimiento.NuevoProducto),
                 VolumenReingreso = await ObtenerVolumen(TipoMovimiento.Ingreso),
+                VolumenVenta = await ObtenerVolumen(TipoMovimiento.Venta),
                 VolumenSalida = await ObtenerVolumen(TipoMovimiento.Salida)
             };
 
             return View(model);
         }
 
+        // 2. ACCIÓN DE LISTADO DE MOVIMIENTOS
         // GET: Movimientos
         public async Task<IActionResult> Index(string search, DateTime? fechaInicio, DateTime? fechaFin, string tipo)
         {
@@ -148,6 +154,7 @@ namespace SistemaInventarioApp.Controllers
         }
 
 
+        // 3. ACCIÓN DE ELIMINAR MOVIMIENTO INDIVIDUAL (GET)
         // GET: Movimientos/Delete/5
         [Authorize(Roles = Constantes.RolAdmin)]
         public async Task<IActionResult> Delete(int id)
@@ -161,6 +168,7 @@ namespace SistemaInventarioApp.Controllers
             return View(movimiento);
         }
 
+        // 4. ACCIÓN DE ELIMINAR MOVIMIENTO INDIVIDUAL (POST)
         // POST: Movimientos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -176,6 +184,7 @@ namespace SistemaInventarioApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // 5. ACCIÓN DE ELIMINAR TODOS LOS MOVIMIENTOS DE UN PRODUCTO
         [HttpPost]
         [Authorize(Roles = Constantes.RolAdmin)]
         [ValidateAntiForgeryToken]

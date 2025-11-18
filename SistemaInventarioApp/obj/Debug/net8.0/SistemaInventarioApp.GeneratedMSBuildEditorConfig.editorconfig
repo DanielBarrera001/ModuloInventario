@@ -36,8 +36,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aW1pZW50b3NcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Daniel/source/repos/ModuloInventario/SistemaInventarioApp/Views/Movimientos/EstadisticasSalida.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aW1pZW50b3NcRXN0YWRpc3RpY2FzU2FsaWRhLmNzaHRtbA==
+[C:/Users/Daniel/source/repos/ModuloInventario/SistemaInventarioApp/Views/Movimientos/EstadisticasMovimientos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aW1pZW50b3NcRXN0YWRpc3RpY2FzTW92aW1pZW50b3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Daniel/source/repos/ModuloInventario/SistemaInventarioApp/Views/Movimientos/Index.cshtml]
@@ -66,6 +66,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Daniel/source/repos/ModuloInventario/SistemaInventarioApp/Views/Productos/Salida.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9zXFNhbGlkYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Daniel/source/repos/ModuloInventario/SistemaInventarioApp/Views/Productos/StockBajoCompleto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9zXFN0b2NrQmFqb0NvbXBsZXRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Daniel/source/repos/ModuloInventario/SistemaInventarioApp/Views/Productos/Venta.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9zXFZlbnRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Daniel/source/repos/ModuloInventario/SistemaInventarioApp/Views/Reportes/Index.cshtml]

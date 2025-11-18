@@ -2,12 +2,12 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistemaInventarioApp.Models;
-using SistemaInventarioApp.Entidades; // Asume que Producto y Movimiento están aquí
+using SistemaInventarioApp.Entidades;
 
 namespace SistemaInventarioApp.Controllers
 {
-    // NUEVA CLASE: Modelo simplificado para la salida diaria
-    public class ProductoSalidaDiaria
+    // CLASES AUXILIARES (iguales a la versión anterior, ProductoVentaDiaria y DashboardViewModel)
+    public class ProductoVentaDiaria
     {
         public string NombreProducto { get; set; }
         public int CantidadVendida { get; set; }
@@ -31,19 +31,20 @@ namespace SistemaInventarioApp.Controllers
 
             // 1. Productos Stock Bajo (Stock < 15)
             var productosStockBajo = await _context.Productos
+                // ?? FILTRO AÑADIDO: Solo incluir productos de tipo Bien (los que tienen Stock)
+                .Where(p => p.Tipo == TipoProducto.Bien)
                 .Where(p => p.Stock < 15)
                 .OrderBy(p => p.Stock)
                 .Take(5)
                 .ToListAsync();
 
-            // 2. Productos con Mayor Salida (Turnover) HOY (NUEVA LÓGICA)
-            var productosMayorSalidaDiaria = await _context.Movimientos
-                .Where(m => m.Tipo == TipoMovimiento.Salida && m.Fecha.Date == hoy)
+            // 2. Productos con Mayor Venta HOY
+            var productosMayorVentaDiaria = await _context.Movimientos
+                .Where(m => m.Tipo == TipoMovimiento.Venta && m.Fecha.Date == hoy)
                 .Include(m => m.Producto)
                 .GroupBy(m => m.ProductoId)
-                .Select(g => new ProductoSalidaDiaria
+                .Select(g => new ProductoVentaDiaria
                 {
-                    // Asume que la entidad Movimiento tiene una propiedad de navegación 'Producto'
                     NombreProducto = g.First().Producto.Nombre,
                     CantidadVendida = g.Sum(m => m.Cantidad)
                 })
@@ -54,11 +55,13 @@ namespace SistemaInventarioApp.Controllers
 
             // 3. Métricas principales
             var totalProductos = await _context.Productos.CountAsync();
-            var totalUnidadesMovidas = await _context.Movimientos
-                .Where(m => m.Tipo != TipoMovimiento.NuevoProducto)
-                .SumAsync(m => m.Cantidad);
 
-            // 4. Movimientos por tipo en los últimos 30 días
+            // ?? CORRECCIÓN CLAVE: Total de Unidades Vendidas (Venta) HOY
+            var totalUnidadesVendidasHoy = await _context.Movimientos
+                .Where(m => m.Tipo == TipoMovimiento.Venta && m.Fecha.Date == hoy)
+                .SumAsync(m => (int?)m.Cantidad) ?? 0; // Usar (int?) y ?? 0 para manejar la suma de un conjunto vacío
+
+            // 4. Movimientos por tipo en los últimos 30 días (Lógica igual, solo para gráficos)
             var movimientosUltimos30Dias = await _context.Movimientos
                 .Where(m => m.Fecha >= fechaInicioMes && m.Tipo != TipoMovimiento.NuevoProducto)
                 .GroupBy(m => m.Tipo)
@@ -68,9 +71,10 @@ namespace SistemaInventarioApp.Controllers
             var model = new DashboardViewModel
             {
                 ProductosStockBajo = productosStockBajo,
-                ProductosMayorSalidaDiaria = productosMayorSalidaDiaria, // NUEVA PROPIEDAD
+                ProductosMayorVentaDiaria = productosMayorVentaDiaria,
                 TotalProductos = totalProductos,
-                TotalUnidadesMovidas = totalUnidadesMovidas,
+                // ?? Asignamos el nuevo cálculo de ventas de hoy
+                TotalUnidadesMovidas = totalUnidadesVendidasHoy,
 
                 // Datos para gráficos
                 LabelsStock = productosStockBajo.Select(p => p.Nombre).ToList(),
@@ -83,6 +87,7 @@ namespace SistemaInventarioApp.Controllers
             return View(model);
         }
 
+        // ... (El resto del código del controlador es el mismo) ...
         public IActionResult Privacy()
         {
             return View();
@@ -101,14 +106,13 @@ namespace SistemaInventarioApp.Controllers
         }
     }
 
-    // Modelo de vista para el dashboard ajustado
     public class DashboardViewModel
     {
         public List<Producto> ProductosStockBajo { get; set; } = new();
-        public List<ProductoSalidaDiaria> ProductosMayorSalidaDiaria { get; set; } = new(); // NUEVA PROPIEDAD
+        public List<ProductoVentaDiaria> ProductosMayorVentaDiaria { get; set; } = new();
 
         public int TotalProductos { get; set; }
-        public int TotalUnidadesMovidas { get; set; } = 0;
+        public int TotalUnidadesMovidas { get; set; } = 0; // ¡Usaremos esto para la venta de hoy!
 
         // Propiedades necesarias para gráficos
         public List<string> LabelsStock { get; set; } = new();

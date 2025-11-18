@@ -1,14 +1,22 @@
 ﻿@using SistemaInventarioApp.Entidades
+@using Microsoft.EntityFrameworkCore
 @inject ApplicationDbContext Context
 
 <div class="container mt-5">
-    <h2 class="mb-4 text-center">📊 Reportes del Inventario</h2>
+    <h2 class="mb-5 text-center text-dark">📊 Gestión de Reportes</h2>
 
-    <div class="row g-4">
+    <div class="alert alert-info shadow-sm" role="alert">
+        <i class="bi bi-info-circle me-2"></i> **Instrucciones:** Selecciona el tipo de reporte y los parámetros (fecha o producto) para generar un informe en formato PDF.
+    </div>
 
-        <!-- Reporte Diario -->
+
+    <h3 class="mb-3 text-primary"><i class="bi bi-arrow-left-right me-2"></i> Movimientos Generales (Ingresos, Salidas, Nuevos)</h3>
+    <hr />
+
+    <div class="row g-4 mb-5">
+
         <div class="col-md-4">
-            <div class="card shadow-sm h-100">
+            <div class="card shadow-sm h-100 border-primary">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0"><i class="bi bi-calendar-day"></i> Diario</h5>
                 </div>
@@ -17,7 +25,7 @@
                         <input type="hidden" name="tipo" value="diario" />
                         <div class="mb-3">
                             <label class="form-label">Seleccionar fecha</label>
-                            <input type="date" name="fecha" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                            <input type="date" name="fecha" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" required />
                         </div>
                         <button type="submit" class="btn btn-primary w-100"><i class="bi bi-file-earmark-pdf"></i> Generar PDF</button>
                     </form>
@@ -25,9 +33,8 @@
             </div>
         </div>
 
-        <!-- Reporte Mensual -->
         <div class="col-md-4">
-            <div class="card shadow-sm h-100">
+            <div class="card shadow-sm h-100 border-success">
                 <div class="card-header bg-success text-white">
                     <h5 class="mb-0"><i class="bi bi-calendar3"></i> Mensual</h5>
                 </div>
@@ -36,7 +43,7 @@
                         <input type="hidden" name="tipo" value="mensual" />
                         <div class="mb-3">
                             <label class="form-label">Seleccionar mes</label>
-                            <input type="month" name="fecha" class="form-control" value="@DateTime.Today.ToString("yyyy-MM")" />
+                            <input type="month" name="fecha" class="form-control" value="@DateTime.Today.ToString("yyyy-MM")" required />
                         </div>
                         <button type="submit" class="btn btn-success w-100"><i class="bi bi-file-earmark-pdf"></i> Generar PDF</button>
                     </form>
@@ -44,20 +51,20 @@
             </div>
         </div>
 
-        <!-- Reporte por Producto -->
         <div class="col-md-4">
-            <div class="card shadow-sm h-100">
+            <div class="card shadow-sm h-100 border-warning">
                 <div class="card-header bg-warning text-dark">
-                    <h5 class="mb-0"><i class="bi bi-box-seam"></i> Por Producto</h5>
+                    <h5 class="mb-0"><i class="bi bi-box-seam"></i> Por Producto (General)</h5>
                 </div>
                 <div class="card-body">
                     <form method="get" asp-action="Generar">
                         <input type="hidden" name="tipo" value="producto" />
                         <div class="mb-3">
                             <label class="form-label">Seleccionar producto</label>
-                            <select name="productoId" class="form-select">
+                            {{-- AÑADIMOS LA CLASE 'select2-producto' --}}
+                            <select name="productoId" id="selectProductoGeneral" class="form-select select2-producto" required>
                                 <option value="">-- Seleccionar producto --</option>
-                                @foreach (var p in Context.Productos)
+                                @foreach (var p in await Context.Productos.OrderBy(p => p.Nombre).ToListAsync())
                                 {
                                     <option value="@p.Id">@p.Nombre (@p.CodigoBarras)</option>
                                 }
@@ -70,4 +77,105 @@
         </div>
 
     </div>
+
+
+    <h3 class="mb-3 text-danger"><i class="bi bi-cash-stack me-2"></i> Reportes de Ventas</h3>
+    <hr />
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0"><i class="bi bi-currency-dollar me-1"></i> Ventas por Día</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get" asp-action="Generar">
+                        <input type="hidden" name="tipo" value="ventas_dia" />
+                        <div class="mb-3">
+                            <label class="form-label">Seleccionar fecha</label>
+                            <input type="date" name="fecha" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+                        </div>
+                        <button type="submit" class="btn btn-danger w-100"><i class="bi bi-file-earmark-pdf"></i> Generar PDF</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 border-info">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="bi bi-calendar2-week me-1"></i> Ventas por Rango</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get" asp-action="Generar">
+                        <input type="hidden" name="tipo" value="ventas_rango" />
+                        <div class="mb-3">
+                            <label class="form-label">Fecha de Inicio</label>
+                            <input type="date" name="fechaInicio" class="form-control" value="@DateTime.Today.AddDays(-7).ToString("yyyy-MM-dd")" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha Fin</label>
+                            <input type="date" name="fechaFin" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+                        </div>
+                        <button type="submit" class="btn btn-info w-100"><i class="bi bi-file-earmark-pdf"></i> Generar PDF</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 border-secondary">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="bi bi-graph-up me-1"></i> Desempeño por Producto</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get" asp-action="Generar">
+                        <input type="hidden" name="tipo" value="ventas_producto" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Seleccionar producto</label>
+                            {{-- AÑADIMOS LA CLASE 'select2-producto' --}}
+                            <select name="productoId" id="selectProductoVentas" class="form-select select2-producto" required>
+                                <option value="">-- Seleccionar producto --</option>
+                                @foreach (var p in await Context.Productos.OrderBy(p => p.Nombre).ToListAsync())
+                                {
+                                    <option value="@p.Id">@p.Nombre (@p.CodigoBarras)</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Fecha de Inicio</label>
+                            <input type="date" name="fechaInicio" class="form-control" value="@DateTime.Today.AddDays(-30).ToString("yyyy-MM-dd")" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha Fin</label>
+                            <input type="date" name="fechaFin" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+                        </div>
+
+                        <button type="submit" class="btn btn-secondary w-100"><i class="bi bi-file-earmark-pdf"></i> Generar PDF</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
+
+{{-- BLOQUE DE SCRIPTS PARA INICIALIZAR SELECT2 --}}
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Inicializa Select2 en todos los elementos con la clase 'select2-producto'
+            // Esto les añade funcionalidad de búsqueda, incluso si no se carga vía AJAX.
+            $('.select2-producto').select2({
+                theme: "bootstrap-5", // Asegura que se vea bien con Bootstrap
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: "Buscar y seleccionar producto...",
+                // Esto es clave para mejorar la experiencia con muchos productos:
+                // Permite buscar tanto por nombre como por código de barras que está en el texto de la opción.
+            });
+        });
+    </script>
+}

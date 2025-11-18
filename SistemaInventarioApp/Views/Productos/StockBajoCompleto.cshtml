@@ -1,0 +1,116 @@
+﻿@model IEnumerable<SistemaInventarioApp.Entidades.Producto>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@using SistemaInventarioApp.Servicios
+@using SistemaInventarioApp.Entidades
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0 text-primary"><i class="bi bi-box-seam me-1"></i> Inventario Completo </h2>
+
+    </div>
+
+    <div class="card shadow-sm mb-4 p-3">
+        <form method="get" asp-action="StockBajoCompleto" class="row g-2 align-items-center">
+            <div class="col-md-6">
+                <input type="text" name="search" class="form-control"
+                       placeholder="Buscar por nombre o código"
+                       value="@Context.Request.Query["search"]" />
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-info shadow-sm">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+                <a asp-action="StockBajoCompleto" class="btn btn-secondary shadow-sm">
+                    <i class="bi bi-x-circle"></i> Limpiar
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <div class="alert alert-info shadow-sm" role="alert">
+        <i class="bi bi-info-circle me-2"></i> **Información:** Esta lista muestra todos los productos de tu inventario, ordenados del **menor stock al mayor stock**.
+    </div>
+
+    @if (!Model.Any() && !string.IsNullOrEmpty(Context.Request.Query["search"]))
+    {
+        <div class="alert alert-warning text-center" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i> No se encontraron productos con el criterio de búsqueda.
+        </div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Precio</th>
+                    <th class="text-center">Stock Actual</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.CodigoBarras</td>
+                        <td>@item.Nombre</td>
+                        <td>
+                            @{
+                                var tipoBadge = item.Tipo == TipoProducto.Bien ? "bg-primary" : "bg-info";
+                            }
+                            <span class="badge @tipoBadge">
+                                @item.Tipo.ToString()
+                            </span>
+                        </td>
+                        <td>@string.Format("{0:C}", item.Precio)</td>
+                        <td class="text-center">
+                            @{
+                                string stockBadgeClass = "bg-success";
+                                if (item.Stock == 0)
+                                {
+                                    stockBadgeClass = "bg-danger";
+                                }
+                                else if (item.Stock < 15)
+                                {
+                                    stockBadgeClass = "bg-warning";
+                                }
+                            }
+                            @if (item.Tipo == TipoProducto.Bien)
+                            {
+                                <span class="badge @stockBadgeClass fs-6">
+                                    @item.Stock
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">
+                                    N/A
+                                </span>
+                            }
+                        </td>
+                        <td>
+                            @{
+                                var esAdmin = User.IsInRole(Constantes.RolAdmin);
+                            }
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-sm btn-outline-success" asp-controller="Productos" asp-action="Reingreso" asp-route-productoId="@item.Id" title="Reingresar stock de este producto">
+                                    <i class="bi bi-arrow-down-left"></i> Reingresar
+                                </a>
+                                @if (esAdmin)
+                                {
+                                    <a class="btn btn-sm btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id" title="Editar detalles del producto">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

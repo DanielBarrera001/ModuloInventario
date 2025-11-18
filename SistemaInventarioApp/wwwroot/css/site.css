@@ -257,3 +257,21 @@ body.scrolled #main-navbar-container {
 }
 
 /* 4. Separador de contenido: ELIMINADO. */
+
+/* Añade esto al final de tu archivo CSS */
+.btn-fixed-height {
+    min-height: 80px; /* Ajusta esta altura según lo necesites */
+    /* Asegura que el texto y el icono estén centrados verticalmente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap; /* Permite que el texto se envuelva si es muy largo, pero la altura fija mantiene el control */
+    text-align: center; /* Centra el texto si se envuelve */
+}
+
+    /* Opcional: Si el texto sigue viéndose muy apretado, puedes ajustar el padding interno o el tamaño de fuente */
+    .btn-fixed-height.btn-lg {
+        padding-top: 5px; /* Reduce un poco el padding si se requiere más espacio para el texto */
+        padding-bottom: 5px;
+        font-size: 1rem; /* Puedes ajustar el tamaño de fuente si el texto es muy largo */
+    }

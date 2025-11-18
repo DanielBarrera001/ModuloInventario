@@ -3,6 +3,7 @@
 @inject UserManager<IdentityUser> UserManager
 @inject SignInManager<IdentityUser> SignInManager
 @using SistemaInventarioApp.Servicios
+@using SistemaInventarioApp.Entidades
 
 @if (TempData["ErrorEliminar"] != null)
 {
@@ -15,29 +16,85 @@
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="mb-0">Lista de Productos</h2>
+        <h2 class="mb-0">📦 Lista de Productos</h2>
         <a class="btn btn-primary shadow-sm" asp-action="Create">
             <i class="bi bi-plus-circle me-1"></i> Agregar Nuevo Producto
         </a>
     </div>
 
     <div class="card shadow-sm mb-4 p-3">
-        <form method="get" asp-action="Index" class="row g-2 align-items-center">
-            <div class="col-md-6">
+        <form method="get" asp-action="Index" class="row g-3 align-items-center">
+
+            <div class="col-md-4 col-lg-3">
                 <input type="text" name="search" class="form-control"
                        placeholder="Buscar por nombre o código"
                        value="@Context.Request.Query["search"]" />
             </div>
+
+            @{
+                var tipoSeleccionado = Context.Request.Query["tipo"].ToString();
+                var stockSeleccionado = Context.Request.Query["stock"].ToString();
+            }
+
+            <!-- FILTRO TIPO DE PRODUCTO -->
+            <div class="col-md-4 col-lg-2">
+                <select name="tipo" class="form-select">
+                    <option value="">Todo el Tipo</option>
+
+                    <option value="@TipoProducto.Bien"
+                            selected="@(tipoSeleccionado == TipoProducto.Bien.ToString())">
+                        Bien
+                    </option>
+
+                    <option value="@TipoProducto.Servicio"
+                            selected="@(tipoSeleccionado == TipoProducto.Servicio.ToString())">
+                        Servicio
+                    </option>
+                </select>
+            </div>
+
+            <!-- FILTRO STOCK -->
+            <div class="col-md-4 col-lg-2">
+                <select name="stock" class="form-select">
+                    <option value="">Todo el Stock</option>
+
+                    <option value="bajo"
+                            selected="@(stockSeleccionado == "bajo")">
+                        Stock Bajo (&lt; 10)
+                    </option>
+
+                    <option value="suficiente"
+                            selected="@(stockSeleccionado == "suficiente")">
+                        Stock Suficiente (&gt;= 10)
+                    </option>
+
+                    <option value="agotado"
+                            selected="@(stockSeleccionado == "agotado")">
+                        Sin Stock (= 0)
+                    </option>
+                </select>
+            </div>
+
             <div class="col-auto">
                 <button type="submit" class="btn btn-info shadow-sm">
-                    <i class="bi bi-search"></i> Buscar
+                    <i class="bi bi-funnel"></i> Aplicar Filtros
                 </button>
+            </div>
+
+            <div class="col-auto">
                 <a asp-action="Index" class="btn btn-secondary shadow-sm">
                     <i class="bi bi-x-circle"></i> Limpiar
                 </a>
             </div>
         </form>
     </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center" role="alert">
+            <i class="bi bi-info-circle me-2"></i> No se encontraron productos con los criterios de búsqueda.
+        </div>
+    }
 
     <div class="table-responsive">
         <table class="table table-hover table-bordered align-middle shadow-sm">
@@ -46,6 +103,7 @@
                     <th>Código de Barras</th>
                     <th>Nombre</th>
                     <th>Descripción</th>
+                    <th>Tipo</th>
                     <th>Precio</th>
                     <th>Stock</th>
                     <th>Acciones</th>
@@ -58,11 +116,31 @@
                         <td>@item.CodigoBarras</td>
                         <td>@item.Nombre</td>
                         <td>@item.Descripcion</td>
+                        <td>
+                            @{
+                                var tipoBadge = item.Tipo == TipoProducto.Bien ? "bg-primary" : "bg-info";
+                            }
+                            <span class="badge @tipoBadge">
+                                @item.Tipo.ToString()
+                            </span>
+                        </td>
                         <td>@string.Format("{0:C}", item.Precio)</td>
                         <td>
-                            <span class="badge @(item.Stock > 10 ? "bg-success" : item.Stock > 0 ? "bg-warning" : "bg-danger")">
-                                @item.Stock
-                            </span>
+                            @{
+                                var stockBadgeClass = item.Stock > 10 ? "bg-success"
+                                : item.Stock > 0 ? "bg-warning"
+                                : "bg-danger";
+                            }
+                            @if (item.Tipo == TipoProducto.Bien)
+                            {
+                                <span class="badge @stockBadgeClass fs-6">
+                                    @item.Stock
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">N/A</span>
+                            }
                         </td>
                         <td>
                             @{

@@ -1,9 +1,10 @@
-﻿@model SistemaInventarioApp.Entidades.Producto
+﻿@using SistemaInventarioApp.Entidades
+@model SistemaInventarioApp.Entidades.Producto
 
 <div class="container mt-5">
     <div class="card shadow rounded">
-        <div class="card-header bg-success text-white">
-            <h3 class="mb-0">Reingreso de Producto</h3>
+        <div class="card-header bg-danger text-white">
+            <h3 class="mb-0">Registrar Venta</h3>
         </div>
         <div class="card-body">
             @if (ViewData["Mensaje"] != null)
@@ -11,26 +12,28 @@
                 <div class="alert alert-success">@ViewData["Mensaje"]</div>
             }
 
-            <form asp-action="Reingreso" method="post">
+            <form asp-action="Venta" method="post">
 
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <div class="mb-3">
                     <label class="form-label"><i class="bi bi-upc-scan"></i> Código de Barras</label>
                     <input type="text" name="codigoBarras" class="form-control" placeholder="Ingrese código de barras" required />
-                    <span asp-validation-for="CodigoBarras" class="text-danger"></span>
+                    @Html.ValidationMessage("codigoBarras", new { @class = "text-danger" })
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label"><i class="bi bi-arrow-down-circle"></i> Cantidad a ingresar</label>
+                    <label class="form-label"><i class="bi bi-cart-fill"></i> Cantidad a Vender</label>
                     <input type="number" name="cantidad" class="form-control" min="1" required />
-                    <span asp-validation-for="Stock" class="text-danger"></span>
+                    @Html.ValidationMessage("cantidad", new { @class = "text-danger" })
                 </div>
-                <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> Reingresar</button>
+
+                <button type="submit" class="btn btn-danger"><i class="bi bi-cash"></i> Registrar Venta</button>
             </form>
 
             @if (Model != null)
             {
-                <h4 class="mt-4">Producto encontrado</h4>
+                <h4 class="mt-4">Elemento Encontrado</h4>
                 <dl class="row">
                     <dt class="col-sm-2">Nombre</dt>
                     <dd class="col-sm-10">@Model.Nombre</dd>
@@ -41,8 +44,17 @@
                     <dt class="col-sm-2">Precio</dt>
                     <dd class="col-sm-10">@string.Format("{0:C}", Model.Precio)</dd>
 
-                    <dt class="col-sm-2">Stock actualizado</dt>
-                    <dd class="col-sm-10">@Model.Stock</dd>
+                    @* Muestra la información de stock según el tipo *@
+                    @if (Model.Tipo == TipoProducto.Bien)
+                    {
+                        <dt class="col-sm-2">Stock disponible</dt>
+                        <dd class="col-sm-10">@Model.Stock</dd>
+                    }
+                    else
+                    {
+                        <dt class="col-sm-2">Tipo</dt>
+                        <dd class="col-sm-10">Servicio (No aplica Stock)</dd>
+                    }
                 </dl>
             }
         </div>
@@ -50,6 +62,5 @@
 </div>
 
 @section Scripts {
-    @* Si estás usando validación del lado del cliente *@
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }

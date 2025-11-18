@@ -2,7 +2,7 @@
 
 <div class="container mt-5">
     <div class="card shadow rounded">
-        <div class="card-header bg-danger text-white">
+        <div class="card-header bg-warning text-white">
             <h3 class="mb-0">Salida de Producto</h3>
         </div>
         <div class="card-body">
@@ -22,7 +22,7 @@
                     <label class="form-label"><i class="bi bi-arrow-up-circle"></i> Cantidad a retirar</label>
                     <input type="number" name="cantidad" class="form-control" min="1" required />
                 </div>
-                <button type="submit" class="btn btn-danger"><i class="bi bi-dash-circle"></i> Retirar</button>
+                <button type="submit" class="btn btn-warning"><i class="bi bi-dash-circle"></i> Retirar</button>
             </form>
 
             @if (Model != null && Model.Id > 0)
