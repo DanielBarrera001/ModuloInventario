@@ -13,11 +13,25 @@
     var hoy = DateTime.Today;
     for (int i = 0; i < 12; i++)
     {
-        mesesDisponibles.Add(hoy.AddMonths(-i));
+        // Se añade el primer día del mes para asegurar que el controlador reciba un inicio de mes limpio
+        var mes = hoy.AddMonths(-i);
+        mesesDisponibles.Add(new DateTime(mes.Year, mes.Month, 1)); 
     }
 
     // 3. Definir la cultura española para los nombres de los meses
     var culturaEspanola = new CultureInfo("es-ES");
+
+    // 🚀 LÓGICA DE FECHA LÍMITE: Si es el mes actual, hasta hoy; si es un mes anterior, hasta fin de mes.
+    DateTime fechaLimite;
+    
+    if (mesSeleccionado.Year == hoy.Year && mesSeleccionado.Month == hoy.Month)
+    {
+        fechaLimite = hoy;
+    }
+    else
+    {
+        fechaLimite = mesSeleccionado.AddMonths(1).AddDays(-1);
+    }
 }
 
 <div class="container py-4">
@@ -39,9 +53,11 @@
                         var valor = mes.ToString("yyyy-MM-dd");
                         var texto = mes.ToString("MMMM yyyy", culturaEspanola);
 
+                        // Comprobación para seleccionar el mes. Se normaliza mes y año.
                         bool isSelected = mes.Year == mesSeleccionado.Year && mes.Month == mesSeleccionado.Month;
 
-                        <option value="@valor" selected="@isSelected">
+                        // 🛑 CORRECCIÓN RZ1031 (Línea 64): Solo se renderiza 'selected' si es verdadero.
+                        <option value="@valor" selected="@(isSelected)">
                             @(culturaEspanola.TextInfo.ToTitleCase(texto))
                         </option>
                     }
@@ -51,7 +67,7 @@
     </form>
 
     <p class="lead text-muted">
-        Datos para el mes: **@(culturaEspanola.TextInfo.ToTitleCase(mesSeleccionado.ToString("MMMM yyyy", culturaEspanola)))** (hasta el @mesSeleccionado.ToString("dd/MM/yyyy")).
+        Datos para el mes: **@(culturaEspanola.TextInfo.ToTitleCase(mesSeleccionado.ToString("MMMM yyyy", culturaEspanola)))** (hasta el **@fechaLimite.ToString("dd/MM/yyyy")**).
         Muestra todos los productos con movimiento, ordenados por volumen descendente.
     </p>
 

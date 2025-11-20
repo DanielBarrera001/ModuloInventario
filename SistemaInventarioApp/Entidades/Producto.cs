@@ -10,9 +10,6 @@ namespace SistemaInventarioApp.Entidades
     {
         public int Id { get; set; }
 
-        [Required]
-        public bool Activo { get; set; } // ¡Asegúrate de que esta línea exista!
-
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Nombre { get; set; }

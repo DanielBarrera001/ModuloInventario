@@ -6,7 +6,7 @@ using SistemaInventarioApp.Entidades;
 
 namespace SistemaInventarioApp.Controllers
 {
-    // CLASES AUXILIARES (iguales a la versión anterior, ProductoVentaDiaria y DashboardViewModel)
+    // CLASES AUXILIARES
     public class ProductoVentaDiaria
     {
         public string NombreProducto { get; set; }
@@ -31,7 +31,6 @@ namespace SistemaInventarioApp.Controllers
 
             // 1. Productos Stock Bajo (Stock < 15)
             var productosStockBajo = await _context.Productos
-                // ?? FILTRO AÑADIDO: Solo incluir productos de tipo Bien (los que tienen Stock)
                 .Where(p => p.Tipo == TipoProducto.Bien)
                 .Where(p => p.Stock < 15)
                 .OrderBy(p => p.Stock)
@@ -52,16 +51,20 @@ namespace SistemaInventarioApp.Controllers
                 .Take(5)
                 .ToListAsync();
 
-
             // 3. Métricas principales
             var totalProductos = await _context.Productos.CountAsync();
 
-            // ?? CORRECCIÓN CLAVE: Total de Unidades Vendidas (Venta) HOY
+            // Total de unidades vendidas HOY
             var totalUnidadesVendidasHoy = await _context.Movimientos
                 .Where(m => m.Tipo == TipoMovimiento.Venta && m.Fecha.Date == hoy)
-                .SumAsync(m => (int?)m.Cantidad) ?? 0; // Usar (int?) y ?? 0 para manejar la suma de un conjunto vacío
+                .SumAsync(m => (int?)m.Cantidad) ?? 0;
 
-            // 4. Movimientos por tipo en los últimos 30 días (Lógica igual, solo para gráficos)
+            // ?? Total de dinero vendido HOY
+            var totalDineroHoy = await _context.Movimientos
+                .Where(m => m.Tipo == TipoMovimiento.Venta && m.Fecha.Date == hoy)
+                .SumAsync(m => (decimal?)(m.PrecioUnitarioVenta * m.Cantidad)) ?? 0;
+
+            // 4. Movimientos por tipo últimos 30 días (gráfico)
             var movimientosUltimos30Dias = await _context.Movimientos
                 .Where(m => m.Fecha >= fechaInicioMes && m.Tipo != TipoMovimiento.NuevoProducto)
                 .GroupBy(m => m.Tipo)
@@ -72,11 +75,11 @@ namespace SistemaInventarioApp.Controllers
             {
                 ProductosStockBajo = productosStockBajo,
                 ProductosMayorVentaDiaria = productosMayorVentaDiaria,
-                TotalProductos = totalProductos,
-                // ?? Asignamos el nuevo cálculo de ventas de hoy
-                TotalUnidadesMovidas = totalUnidadesVendidasHoy,
 
-                // Datos para gráficos
+                TotalProductos = totalProductos,
+                TotalUnidadesMovidas = totalUnidadesVendidasHoy,
+                TotalDineroVendidoHoy = totalDineroHoy,
+
                 LabelsStock = productosStockBajo.Select(p => p.Nombre).ToList(),
                 DataStock = productosStockBajo.Select(p => p.Stock).ToList(),
 
@@ -87,7 +90,6 @@ namespace SistemaInventarioApp.Controllers
             return View(model);
         }
 
-        // ... (El resto del código del controlador es el mismo) ...
         public IActionResult Privacy()
         {
             return View();
@@ -106,15 +108,17 @@ namespace SistemaInventarioApp.Controllers
         }
     }
 
+    // VIEWMODEL
     public class DashboardViewModel
     {
         public List<Producto> ProductosStockBajo { get; set; } = new();
         public List<ProductoVentaDiaria> ProductosMayorVentaDiaria { get; set; } = new();
 
         public int TotalProductos { get; set; }
-        public int TotalUnidadesMovidas { get; set; } = 0; // ¡Usaremos esto para la venta de hoy!
+        public int TotalUnidadesMovidas { get; set; } = 0;
 
-        // Propiedades necesarias para gráficos
+        public decimal TotalDineroVendidoHoy { get; set; } = 0; // ?? NUEVO
+
         public List<string> LabelsStock { get; set; } = new();
         public List<int> DataStock { get; set; } = new();
 

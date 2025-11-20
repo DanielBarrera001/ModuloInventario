@@ -180,12 +180,6 @@ namespace SistemaInventarioApp.Controllers
                 return View(producto);
             }
 
-            if (!producto.Activo)
-            {
-                ModelState.AddModelError("", $"No se puede reingresar stock. El producto '{producto.Nombre}' está Inactivo.");
-                return View(producto);
-            }
-
             producto.Stock += cantidad;
             _context.Update(producto);
             await _context.SaveChangesAsync();
@@ -227,12 +221,6 @@ namespace SistemaInventarioApp.Controllers
                 return View();
             }
 
-            if (!producto.Activo)
-            {
-                ModelState.AddModelError("", $"No se puede registrar la venta. El producto '{producto.Nombre}' está Inactivo.");
-                return View(producto);
-            }
-
             if (producto.Tipo == TipoProducto.Bien)
             {
                 if (producto.Stock < cantidad)
@@ -247,19 +235,25 @@ namespace SistemaInventarioApp.Controllers
 
             await _context.SaveChangesAsync();
 
+            // 👇 AQUÍ AGREGAMOS EL PRECIO DE VENTA UNITARIO
             var movimiento = new Movimiento
             {
                 ProductoId = producto.Id,
                 Cantidad = cantidad,
                 Tipo = TipoMovimiento.Venta,
-                Fecha = DateTime.Now
+                Fecha = DateTime.Now,
+                PrecioUnitarioVenta = producto.Precio.HasValue
+                    ? (decimal)producto.Precio.Value
+                    : 0m
             };
+
             _context.Movimientos.Add(movimiento);
             await _context.SaveChangesAsync();
 
             ViewData["Mensaje"] = $"Se registró la venta de {cantidad} unidad(es) de {producto.Nombre}.";
             return View(producto);
         }
+
 
         public IActionResult Salida()
         {
@@ -287,12 +281,6 @@ namespace SistemaInventarioApp.Controllers
             if (producto.Tipo == TipoProducto.Servicio)
             {
                 ModelState.AddModelError("", $"No se puede dar salida de stock. El producto '{producto.Nombre}' es un Servicio y no gestiona Stock.");
-                return View(producto);
-            }
-
-            if (!producto.Activo)
-            {
-                ModelState.AddModelError("", $"No se puede dar salida a un producto que está Inactivo.");
                 return View(producto);
             }
 

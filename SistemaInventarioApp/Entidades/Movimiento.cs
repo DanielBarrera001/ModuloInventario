@@ -4,13 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaInventarioApp.Entidades
 {
-
     public enum TipoMovimiento
     {
         Ingreso,
         Salida,
         Venta,
-        NuevoProducto 
+        NuevoProducto
     }
 
     public class Movimiento
@@ -18,10 +17,12 @@ namespace SistemaInventarioApp.Entidades
         public int Id { get; set; }
 
         [Required]
-        public TipoMovimiento Tipo { get; set; } 
+        public TipoMovimiento Tipo { get; set; }
 
         [Required]
         public int Cantidad { get; set; }
+
+        public decimal PrecioUnitarioVenta { get; set; }  
 
         [Required]
         public DateTime Fecha { get; set; }
@@ -30,8 +31,7 @@ namespace SistemaInventarioApp.Entidades
         public int ProductoId { get; set; }
 
         [ForeignKey("ProductoId")]
-
         [DeleteBehavior(DeleteBehavior.Restrict)]
-        public Producto Producto { get; set; } 
+        public Producto Producto { get; set; }
     }
 }
