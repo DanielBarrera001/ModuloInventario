@@ -1,0 +1,277 @@
+/* ESTRUCTURA GENERAL Y TIPOGRAFÍA */
+
+html {
+    font-size: 14px;
+    position: relative;
+    height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/* CUERPO, FONDO Y STICKY FOOTER */
+
+body {
+    position: relative;
+    z-index: 1;
+    background-color: #f5f6fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/images/ranita_logo.png');
+        background-repeat: no-repeat;
+        background-position: right bottom;
+        background-size: 350px auto;
+        opacity: 0.5;
+        z-index: -1;
+    }
+
+/* Contenido Principal*/
+.container {
+    flex-grow: 1;
+}
+
+/* NAVBAR Y NAVEGACIÓN */
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-word;
+    color: #1b6ec2 !important;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff;
+    position: relative;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+    .navbar-nav .nav-link:hover {
+        color: #ffc107 !important;
+        background-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .navbar-nav .nav-link::after {
+        content: '';
+        display: block;
+        height: 3px;
+        width: 0;
+        background: #ffc107;
+        transition: width 0.3s;
+        position: absolute;
+        bottom: 2px;
+        left: 0;
+        border-radius: 2px;
+    }
+
+    .navbar-nav .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .navbar-nav .nav-link.active {
+        background-color: #0d6efd;
+        color: #fff !important;
+    }
+
+        .navbar-nav .nav-link.active::after {
+            width: 100%;
+            background: #ffc107;
+        }
+
+/* ESTILOS DE BOTONES */
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    transition: 0.3s;
+}
+
+    .btn-primary:hover {
+        background-color: #145a9e;
+        border-color: #0f477e;
+        color: #fff;
+    }
+
+/* ESTILOS DE INPUTS Y FORMULARIOS */
+
+.form-control {
+    border-radius: 0.5rem;
+    border: 1px solid #ced4da;
+    transition: 0.3s;
+}
+
+    .form-control:focus {
+        border-color: #1b6ec2;
+        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    }
+
+.input-group-text {
+    background-color: #ffffff;
+    border-right: 0;
+}
+
+.input-group .form-control {
+    border-left: 0;
+    border-radius: 0.5rem;
+}
+
+/* BORDES Y SOMBRAS */
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+/* FOOTER */
+
+.footer {
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+    flex-shrink: 0;
+}
+
+/* CARDS Y CONTENEDORES */
+
+.card {
+    border-radius: 0.75rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+    margin-bottom: 1.5rem;
+}
+
+/* TABLAS Y BADGES */
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.badge-stock-low {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.badge-stock-medium {
+    background-color: #fd7e14;
+    color: #fff;
+}
+
+.badge-stock-high {
+    background-color: #198754;
+    color: #fff;
+}
+
+/* UTILIDADES RESPONSIVE */
+
+@media (max-width: 576px) {
+    .navbar-nav .nav-link {
+        padding: 0.4rem 0.5rem;
+    }
+}
+
+/* --- ESTILO ADICIONAL PARA EL TEXTO SOBRE EL BANNER --- */
+.shadow-text {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+/* --- EFECTO STICKY HEADER --- */
+
+/* 1. Estilo para el contenedor de la imagen grande (Hero Banner) */
+#hero-banner {
+    /* Altura y Fondo Verde Sólido */
+    height: 350px;
+    background-color: #33692b; /* Fondo Verde Institucional */
+    background-image: none;
+    /* Configuración Flexbox para Centrar el Contenido (Logo + Texto) */
+    display: flex;
+    flex-direction: column; /* Apila los elementos verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    /* CLAVE: Mantiene el margen negativo para el efecto sticky del navbar */
+    margin-bottom: -60px;
+    transition: all 0.3s ease-in-out;
+    text-align: center; /* Centra el texto */
+}
+
+    /* Nuevo estilo para el logo */
+    #hero-banner img.logo-ranita {
+        width: 100px; /* Tamaño deseado del logo (ajusta si es necesario) */
+        height: auto;
+        margin-bottom: 15px; /* Espacio entre el logo y el texto */
+        filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)); /* Sombra para resaltar */
+    }
+
+/* 2. Estilo para el contenedor del navbar (¡Ahora es el elemento Sticky!) */
+#main-navbar-container {
+    /* CLAVE: Hace que el elemento se fije cuando su posición top: 0 alcance el viewport */
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    width: 100%;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+/* 3. Clase SCROLLED (Estilo visual al hacer scroll) */
+
+/* Estilo para que el texto del banner se desvanezca */
+body.scrolled #hero-banner .shadow-text {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Estilo para dar una sombra al nav cuando está fijo */
+body.scrolled #main-navbar-container {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 4. Separador de contenido: ELIMINADO. */
+
+/* Añade esto al final de tu archivo CSS */
+.btn-fixed-height {
+    min-height: 80px; /* Ajusta esta altura según lo necesites */
+    /* Asegura que el texto y el icono estén centrados verticalmente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap; /* Permite que el texto se envuelva si es muy largo, pero la altura fija mantiene el control */
+    text-align: center; /* Centra el texto si se envuelve */
+}
+
+    /* Opcional: Si el texto sigue viéndose muy apretado, puedes ajustar el padding interno o el tamaño de fuente */
+    .btn-fixed-height.btn-lg {
+        padding-top: 5px; /* Reduce un poco el padding si se requiere más espacio para el texto */
+        padding-bottom: 5px;
+        font-size: 1rem; /* Puedes ajustar el tamaño de fuente si el texto es muy largo */
+    }

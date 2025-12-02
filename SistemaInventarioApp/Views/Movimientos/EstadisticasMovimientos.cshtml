@@ -53,10 +53,8 @@
                         var valor = mes.ToString("yyyy-MM-dd");
                         var texto = mes.ToString("MMMM yyyy", culturaEspanola);
 
-                        // Comprobación para seleccionar el mes. Se normaliza mes y año.
                         bool isSelected = mes.Year == mesSeleccionado.Year && mes.Month == mesSeleccionado.Month;
 
-                        // 🛑 CORRECCIÓN RZ1031 (Línea 64): Solo se renderiza 'selected' si es verdadero.
                         <option value="@valor" selected="@(isSelected)">
                             @(culturaEspanola.TextInfo.ToTitleCase(texto))
                         </option>
@@ -67,29 +65,29 @@
     </form>
 
     <p class="lead text-muted">
-        Datos para el mes: **@(culturaEspanola.TextInfo.ToTitleCase(mesSeleccionado.ToString("MMMM yyyy", culturaEspanola)))** (hasta el **@fechaLimite.ToString("dd/MM/yyyy")**).
+        Datos para el mes: @(culturaEspanola.TextInfo.ToTitleCase(mesSeleccionado.ToString("MMMM yyyy", culturaEspanola))) (hasta el @fechaLimite.ToString("dd/MM/yyyy")).
         Muestra todos los productos con movimiento, ordenados por volumen descendente.
     </p>
 
     <ul class="nav nav-tabs" id="statsTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="venta-tab" data-bs-toggle="tab" data-bs-target="#venta" type="button" role="tab" aria-controls="venta" aria-selected="true">
-                💰 **Ventas**
+                💰 Ventas
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="salida-ajuste-tab" data-bs-toggle="tab" data-bs-target="#salida-ajuste" type="button" role="tab" aria-controls="salida-ajuste" aria-selected="false">
-                📉 **Salida (Ajuste)**
+                📉 Salida
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="reingreso-tab" data-bs-toggle="tab" data-bs-target="#reingreso" type="button" role="tab" aria-controls="reingreso" aria-selected="false">
-                ⬆️ **Reingreso**
+                ⬆️ Reingreso
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="ingreso-nuevo-tab" data-bs-toggle="tab" data-bs-target="#ingreso-nuevo" type="button" role="tab" aria-controls="ingreso-nuevo" aria-selected="false">
-                ➕ **Ingreso Nuevo**
+                ➕ Ingreso Nuevo
             </button>
         </li>
     </ul>

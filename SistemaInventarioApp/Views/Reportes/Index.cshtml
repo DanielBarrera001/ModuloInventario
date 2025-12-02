@@ -6,7 +6,7 @@
     <h2 class="mb-5 text-center text-dark">📊 Gestión de Reportes</h2>
 
     <div class="alert alert-info shadow-sm" role="alert">
-        <i class="bi bi-info-circle me-2"></i> **Instrucciones:** Selecciona el tipo de reporte y los parámetros (fecha o producto) para generar un informe en formato PDF.
+        <i class="bi bi-info-circle me-2"></i> Instrucciones: Selecciona el tipo de reporte y los parámetros (fecha o producto) para generar un informe en formato PDF.
     </div>
 
 
@@ -61,7 +61,6 @@
                         <input type="hidden" name="tipo" value="producto" />
                         <div class="mb-3">
                             <label class="form-label">Seleccionar producto</label>
-                            {{-- AÑADIMOS LA CLASE 'select2-producto' --}}
                             <select name="productoId" id="selectProductoGeneral" class="form-select select2-producto" required>
                                 <option value="">-- Seleccionar producto --</option>
                                 @foreach (var p in await Context.Productos.OrderBy(p => p.Nombre).ToListAsync())
@@ -135,7 +134,6 @@
 
                         <div class="mb-3">
                             <label class="form-label">Seleccionar producto</label>
-                            {{-- AÑADIMOS LA CLASE 'select2-producto' --}}
                             <select name="productoId" id="selectProductoVentas" class="form-select select2-producto" required>
                                 <option value="">-- Seleccionar producto --</option>
                                 @foreach (var p in await Context.Productos.OrderBy(p => p.Nombre).ToListAsync())
@@ -163,7 +161,6 @@
     </div>
 </div>
 
-{{-- BLOQUE DE SCRIPTS PARA INICIALIZAR SELECT2 --}}
 @section Scripts {
     <script>
         $(document).ready(function() {
