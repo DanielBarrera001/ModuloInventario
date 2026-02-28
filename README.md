@@ -66,6 +66,3 @@ A continuación se presentan capturas de pantalla del sistema en funcionamiento.
 * **Reportes:** DinkToPdf / QuestPDF.
 
 ---
-
-## Pequeña Descripción (Para el About de GitHub)
-> Sistema de control de inventario y stock en .NET 8. Incluye dashboard de KPIs, trazabilidad de movimientos, alertas de stock crítico y generación de reportes en PDF.
